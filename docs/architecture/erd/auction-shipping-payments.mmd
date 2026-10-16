@@ -1,0 +1,113 @@
+erDiagram
+  ARTIST_PROFILE ||--o{ ARTWORK : donates
+  MISSION ||--o{ ARTWORK : benefits_from
+  ARTWORK ||--|{ ARTWORK_MEDIA : shows
+  ARTWORK ||--o| AUCTION : listed_as
+  AUCTION ||--o{ BID : receives
+  USER ||--o{ BID : places
+  AUCTION ||--o| PAYMENT : settled_by
+  MISSION ||--o{ PAYMENT : receives
+  PAYMENT ||--|{ TRANCHE : released_in
+  TRANCHE ||--o{ TRANCHE_RELEASE : paid_via
+  TRANCHE ||--o| MILESTONE_REPORT : evidenced_by
+  MISSION ||--o{ TRANCHE_REPORT : reports_on
+  TRANCHE ||--o{ TRANCHE_REPORT : reported_in
+  AUCTION ||--o{ APPROVAL : readiness
+  TRANCHE ||--o{ APPROVAL : release
+  PAYMENT }o--o| SHIPPING_RATE : shipped_at
+  SHIPPING_RATE }o--|| SHIPPING_ZONE : belongs_to
+  ARTWORK {
+    uuid id PK
+    uuid artist_id FK
+    uuid mission_id FK
+    string title
+    text piece_description
+    text reason_for_mission
+    string size_class
+  }
+  ARTWORK_MEDIA {
+    uuid id PK
+    uuid artwork_id FK
+    string media_kind
+    string file_url
+    int sort_order
+  }
+  AUCTION {
+    uuid id PK
+    uuid artwork_id FK
+    text mission_summary
+    decimal start_price
+    timestamp ends_at
+    string status
+  }
+  BID {
+    uuid id PK
+    uuid auction_id FK
+    uuid supporter_id FK
+    decimal amount
+    timestamp placed_at
+  }
+  PAYMENT {
+    uuid id PK
+    uuid auction_id FK
+    uuid mission_id FK
+    uuid supporter_id FK
+    decimal item_amount
+    decimal shipping_amount
+    uuid shipping_rate_id FK
+    string provider_ref
+    string status
+  }
+  TRANCHE {
+    uuid id PK
+    uuid payment_id FK
+    int sequence
+    decimal share
+    decimal amount
+    string trigger_type
+    string status
+  }
+  TRANCHE_RELEASE {
+    uuid id PK
+    uuid tranche_id FK
+    decimal amount
+    timestamp released_at
+    string provider_transfer_ref
+    string status
+  }
+  MILESTONE_REPORT {
+    uuid id PK
+    uuid tranche_id FK
+    text report_text
+    string file_reference
+    uuid submitted_by FK
+    timestamp submitted_at
+  }
+  TRANCHE_REPORT {
+    uuid id PK
+    uuid tranche_id FK
+    uuid mission_id FK
+    text summary
+    string file_reference
+    timestamp published_at
+  }
+  APPROVAL {
+    uuid id PK
+    uuid admin_id FK
+    string target_type
+    uuid target_id
+    int approval_order
+  }
+  SHIPPING_ZONE {
+    uuid id PK
+    string name
+    text countries
+  }
+  SHIPPING_RATE {
+    uuid id PK
+    uuid zone_id FK
+    string size_class
+    decimal fee
+    string currency
+    uuid artist_id FK
+  }

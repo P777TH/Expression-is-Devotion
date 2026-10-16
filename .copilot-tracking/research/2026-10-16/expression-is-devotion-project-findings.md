@@ -1,0 +1,172 @@
+<!-- markdownlint-disable-file -->
+# Expression Is Devotion Project Findings
+
+## Scope and Research Questions
+
+This research evaluates the current Expression is Devotion requirements, architecture records, ERDs, ontology, options, delivery roadmap, repository state, and the accessible RDCF submodule. It answers:
+
+1. Do the views and ERDs agree with the business workflows, and what model gaps or contradictions matter before implementation?
+2. Which architecture and data approach best supports staged funds, approval controls, audit, privacy, and the user's need for understandable project views?
+3. What should be built, integrated, or deferred; what can effort bands responsibly claim without team/capacity data?
+4. What must be verified before Superteam is used safely, and what is actually known about RDCF?
+5. Which launch gates and primary documentation corrections are most important?
+
+This is technical/product research, not legal advice, a vendor assessment, or a stack approval. External technical references were accessed on 2026-10-16.
+
+## Executive Finding
+
+The most defensible direction is a **capability-level assemble-first strategy around a small, modular monolith with a relational transactional source of truth**. Build the organization-specific workflows and control rules; integrate commodity identity, payment processing, email delivery, private object storage, malware scanning, hosting, key management, and monitoring only after contract, residency, security, eligibility, recovery, and support checks. Keep the domain vocabulary as a governed, storage-neutral ontology. Do not add a graph database, RDF/OWL store, microservices, or native app to Release 1 absent a demonstrated requirement.
+
+This is a recommendation, not an approved architecture. Most importantly, no real-money implementation or launch should proceed until qualified Dutch legal/finance owners and the selected payment provider establish a lawful and operationally supportable custody, settlement, refund, reconciliation, and international payout model. The current repository is planning material: it has no application source, package manifest, CI, tests, or deployment configuration.
+
+## Evidence Log
+
+| Evidence | Verified observation | Relevance |
+| --- | --- | --- |
+| `README.md:10-19,36-76` | BRD defines the mission/art auction/donation product, Release 1 scope, actors, and the intended staged-funding flow. | Product needs are custom and cross-module. |
+| `README.md:143-180` | Separate auction and tranche permissions are required; item amount is held, shipping excluded, and tranche releases logged. Several policy details remain proposed. | The key architecture stressor is controlled money state, not graph traversal. |
+| `README.md:184-216` | EU/privacy, data retention, encryption, server authorization, MFA, and social retry requirements are present, though several remain proposed/modelled rather than implemented. | Security statements need operational ownership and test criteria. |
+| `README.md:254-310` | Stack is undecided; 52 open decisions include custody, provider, pooling, donations, fees, failed missions, chargebacks, auction mechanics, board roles, safeguarding, recovery, build-versus-assemble, schema, moderation, and accessibility. | These are active planning inputs, not settled requirements. |
+| `docs/architecture/README.md:6-18,35-45` | Architecture docs distinguish current state from proposal; the modular monolith and repository layout are proposals. No product code/build/test tooling exists. | Keep project overview understandable and avoid implying that proposed folders or vendors exist. |
+| `docs/architecture/README.md:162-177` | The reconciliation list already records missing relations, donations/schedules/evidence, polymorphic integrity, and approval-separation work. | These are known pre-migration tasks. |
+| `docs/architecture/overview.md:31-57,82-84` | Human board accountability, relational recommendation, stack uncertainty, payment-custody gate, and absence of app/CI/deploy are explicit. | Aligns with this assessment. |
+| `docs/architecture/business-view.md:25-47,61-66` | Business flow separates shipping from mission funds and flags donation/pooling, provider settlement, refunds, and chargeback reconciliation as unresolved. | Avoid designing a happy-path-only payment feature. |
+| `docs/architecture/data-model.md:17-23,37-58` | Relational system-of-record is recommended; invariants include release ceiling, shipping exclusion, approval separation, duplicate callback safety, audit, and privacy. | Good target principles, but not yet represented fully by ERDs. |
+| `docs/architecture/technical-view.md:49-92` | Proposed modules define ownership; security/privacy and reliability expectations include idempotency, retries, reconciliation, runbooks, restore, rollback, and manual publishing fallback. | Suitable engineering acceptance areas once made measurable. |
+| `docs/architecture/delivery-roadmap.md:6-24,27-92` | Relative effort bands and six phases are proposals; real money is gated on legal/provider evidence and sandbox reconciliation; pilot requires human sign-off and recovery exercises. | Sound sequencing; effort bands need calibration. |
+| `docs/architecture/options/README.md:6-39` | Current option recommendation is relational-first; graph, hybrid, assemble-first and RDF/OWL are distinct alternatives. | Sound conclusion, but the graph rationale should be about current workload and total complexity, not presumed lack of transactions. |
+| `docs/architecture/ontology/README.md:6-66` | Ontology is explicitly a vocabulary, not a schema or store decision; it defers RDF/OWL absent an interoperability need. | Appropriate scope for current maturity. |
+| `docs/architecture/build-squad.md:6-18,42-78` | Superteam is intended as build-time tooling; human owners retain product/release/financial authority; actual Superteam source could not be read here. | The mapped roles are proposals pending access and security review. |
+| `docs/architecture/related-projects.md:6-40` | RDCF is pinned as a submodule; Superteam API access returned 404 and Git fetch returned 403 in this environment. | This establishes an access limitation, not why access failed. |
+| `projects/racecar-discipleship-framework/README.md:19,35-47` | RDCF says exploration-only, not wired into a live agent session, and not a Superteam replacement. | RDCF is not executable squad configuration. |
+| `projects/racecar-discipleship-framework/ROSTER.md:1-29` | Roster maps personas and roles, including the outer-ring Atlas/data, Diesel/backend, Orbit/cloud, and Pixel/frontend roles. | Useful for role discovery only; does not establish live agent permissions or capacity. |
+| `docs/architecture/erd/auction-shipping-payments.mmd:1-18,43-100` | Auction/payment/tranche/release/report/approval relations are conceptual; payment points to auction/mission, tranche points to payment, generic approval uses target type/id, and no schedule or donation entity appears. | The current shape cannot yet express the settled money model or enforce all governance rules. |
+| `docs/architecture/erd/applications-consent-access.mmd:1-17,28-50,77-100` | Application organisation is mandatory in the diagram; user has a scalar role; documents use polymorphic owner fields; approval and audit entities are defined here. | Conflicts with artist applications, multi-role ontology, and integrity requirements. |
+| `docs/architecture/erd/identity-organisations.mmd:1-17,18-98` | Identity, organization, verification, mission, and supporter entities exist; `ADDRESS` is polymorphic and user role shape is not aligned with the ontology's multi-role person. | Useful design inventory, not an implementation-ready schema. |
+| `docs/architecture/erd/content-formats-outreach.mmd:1-20,29-122` | Testimony/media/social posting/newsletter/contact entities exist; media uses `file_url`; some entity fields lack depicted relationships. | Privacy, relationship integrity, and publish-workflow definitions need reconciliation. |
+| Repository check, 2026-10-16 | `git submodule status` reported RDCF at `47140f3668c97ef96eabdb759fae05fd25ade71b`; no product/config/test paths were found by the focused file search. Existing user changes were present and left untouched. | No capacity or functioning build/test pipeline can be inferred from repository state. |
+
+## Findings and Discrepancies
+
+### What Is Consistent
+
+The architecture index, overview, business, data, technical, options, ontology, and roadmap tell a broadly consistent story: current documents are proposals, relational data is the likely transactional core, one deployable modular application is a sensible initial shape, vendors should be replaceable, graph is deferred, ontology is storage-neutral, and people retain legal and financial authority. The recommendation to delay money movement and make manual social publishing available is prudent.
+
+The BRD's requested understandable overview is substantially addressed by the architecture map and distinct views. The role/capability/workflow diagrams serve different audiences rather than forcing one overloaded diagram. The documentation should keep an explicit decision-status legend and a single navigation index so stakeholders can distinguish verified product decisions from recommendations and unresolved questions.
+
+### Material Model Gaps and Cross-Document Mismatches
+
+1. **Donation and pooling are not modeled.** BRD Release 1 includes quick donations and one mission-level tranche schedule, but the payment ERD represents payments only through an auction and tranches only through a payment. It lacks a donation entity, mission-owned schedule/version, and an explicit allocation/ledger concept for pooling proceeds from multiple artworks. Sources: `README.md:163-180,271-273`; `docs/architecture/erd/auction-shipping-payments.mmd:8-16,50-69`; `docs/architecture/README.md:173`.
+2. **Payment lifecycle is too thin for reconciliation.** `PAYMENT` has amount, provider reference, and status; `TRANCHE_RELEASE` has transfer reference and status. There is no explicit model for provider settlement/event records, fees, currency/FX, refund/chargeback/reversal, idempotency key, or reconciliation exception. Some are still policy decisions, but the domain must account for them before a money-flow schema is approved. Sources: `docs/architecture/erd/auction-shipping-payments.mmd:50-76`; `docs/architecture/business-view.md:45-47`; BRD open items `README.md:274-278`.
+3. **Approval semantics are inconsistent and insufficient.** The applications ERD's `APPROVAL` has decision/time fields; the payment ERD's `APPROVAL` has only admin, polymorphic target, and order. Neither diagram demonstrates the rule that the auction approver cannot approve the related payment, or threshold-based dual approval. The two diagrams may describe one conceptual table or different bounded records; clarify ownership and common semantics before migrations. Sources: `docs/architecture/erd/applications-consent-access.mmd:77-89`; `docs/architecture/erd/auction-shipping-payments.mmd:15-16,94-100`; BRD `README.md:145-161,287`.
+4. **Role cardinality conflicts.** Ontology says a person can hold multiple roles, while both identity diagrams represent `USER.role` as one string. Use a role assignment model or explicitly change the ontology/business rule; authorization must not depend on an ambiguous scalar. Sources: `docs/architecture/ontology/README.md:14-16`; `docs/architecture/erd/applications-consent-access.mmd:18-23`; `docs/architecture/erd/identity-organisations.mmd:18-26`.
+5. **Known relationship gaps remain.** Payment-to-supporter, shipping-rate-to-artist, post-attempt-to-render, and contact-request-to-artwork are listed in BRD item 42 but not represented as complete relationship constraints. Artist applications also require optional organization and a link to resulting artwork. Polymorphic references and the three-media limit need enforceable rules. Sources: `README.md:303-305`; `docs/architecture/README.md:170-176`; `docs/architecture/erd/auction-shipping-payments.mmd:17,43-59,106-112`; `docs/architecture/erd/content-formats-outreach.mmd:16-20,81-89,122-130`.
+6. **Evidence and testimony are not resolved.** The BRD says each tranche requires evidence, described as testimony plus other proof in objectives; the ERD has one optional milestone report per tranche and the ontology says a testimony may supply evidence. Decide whether evidence is an extensible evidence record, a milestone report, testimony, or a combination; define whether it is required and how private evidence differs from published reporting. Sources: `README.md:30,169-172`; `docs/architecture/erd/auction-shipping-payments.mmd:12,78-92`; `docs/architecture/ontology/README.md:24-27,49-56`.
+7. **Privacy representation is weaker than privacy intent.** ERDs use `file_url` for artwork and testimony media even though the docs require private storage and signed access. They do not visibly capture media rights/consent, moderation state, classification, retention, or child-safety disposition. Define storage keys and access generation rather than persisting long-lived public URLs; make data classification and lifecycle obligations explicit in the model. Sources: `README.md:184-199,291-292`; `docs/architecture/erd/auction-shipping-payments.mmd:28-34`; `docs/architecture/erd/content-formats-outreach.mmd:29-35`; `docs/architecture/technical-view.md:65-80`.
+8. **Audit and integrity need concrete enforcement design.** Generic `target_type/target_id` and `owner_type/owner_id` fields do not provide ordinary foreign-key integrity. The application ERD links audit to user and erasure requests, but not visibly to approval/permission changes or restricted reads as first-class event relations. Specify transaction boundaries, immutable/append-only evidence requirements, actor/resource/action fields, and authorization checks; decide where DB constraints versus application checks apply. Sources: `README.md:155-161,303-305`; `docs/architecture/erd/applications-consent-access.mmd:12-17,39-50,77-100`; `docs/architecture/erd/auction-shipping-payments.mmd:94-100`.
+
+These are design gaps, not proof that implementation cannot support the workflow. The ERDs explicitly say they are conceptual; they should not be described as a ready-to-migrate schema.
+
+## Architecture Alternatives and Trade-Offs
+
+| Approach | Fit to payment/tranche/approval/audit/privacy needs | Assessment |
+| --- | --- | --- |
+| Relational-first | Strong for keyed entities, referential integrity, constraints, queryable reports, and atomic multi-record changes. Still requires careful schema, isolation/concurrency design, append-only audit strategy, server authorization, provider reconciliation, and privacy operations. | Best primary store for Release 1 given existing ERDs and workflows. This is a fit judgment, not a claim that other database classes cannot transact. |
+| Property graph first | Natural for multi-hop mission/person/artwork/supporter exploration. A graph store may offer ACID transactions; Neo4j documents ACID transaction semantics. It can represent payment state and approvals, but the project would still need to prove its chosen product's constraints, authorization model, reporting/reconciliation, recovery, operator familiarity, and evidence export. | Technically possible, but no critical graph traversal has been established. It changes the persistence model while adding no demonstrated launch value. Reconsider if a primary user workflow or regulator/reporting need is graph-native and proven with a spike. |
+| Relational plus graph projection | Keeps payout authority and canonical changes relational, while a graph supports impact/network analysis. Requires outbox/change feed, idempotent projection, freshness objectives, rebuild/replay, deletion and access-control propagation, and reconciliation. Never use the projection to authorize or release funds. | Defer until a named use case and representative query show relational queries are inadequate. |
+| RDF/OWL | RDF standardizes graph-shaped statements as subject-predicate-object triples; OWL adds formal ontology semantics and supports reasoning/query tasks. This serves semantic exchange, shared vocabularies, and inference, not by itself payment custody, idempotent provider events, release authorization, or accounting reconciliation. | Keep the human-readable ontology now. Add RDF/OWL only for an agreed cross-organization data contract, vocabulary mapping, or funded reasoning requirement. |
+| Document database first | Flexible nested data can fit versioned forms or variable social payloads. MongoDB documents single-document atomicity and supports multi-document ACID transactions, while warning distributed transactions cost more and do not replace good schema design. A document store is therefore not categorically incapable; the question is whether this workload benefits enough to justify modeling cross-document constraints and reports there. | Not preferred as the primary operational store because the current requirements center on linked identities, approvals, money allocations, audit, and reconciliation. Consider for bounded payloads only if a concrete use case warrants it. |
+| Capability-level assemble-first | Managed identity, payment, email, storage/scanning, CMS, hosting, KMS, and monitoring can reduce commodity implementation/operations. Product-specific approvals, domain state, allocation/reconciliation, user workflows, consent and reporting still need coherent ownership. | Use selectively. Do not assume a single marketplace/no-code suite supports custody, split/staged payouts, access separation, deletion, portability, and international eligibility. Evaluate against scenarios and contracts. |
+
+### Selected Approach
+
+Choose a **stack-neutral modular monolith with relational system of record and selective managed capabilities**. Keep one deployable product initially, with ownership boundaries for identity/access, applications/vetting, missions, artist/artwork, auction, funds, governance/audit, content, and outreach. Store sensitive media in private object storage and keep metadata/authorization in the application database. Use provider adapters and a transactional outbox/job mechanism where asynchronous provider work is required; avoid database/graph dual writes in request paths. Formalize the ontology as an agreed vocabulary with stable identifiers and definitions, but do not bind it to a DB schema or RDF serialization today.
+
+This combines relational-first operational truth with assemble-first delivery. It is neither a commitment to PostgreSQL/Supabase nor permission to use a provider that cannot legally/contractually support the flow. Do not infer Next.js, Vercel, Supabase, or Stripe Connect as approved: `README.md:254,297-298` explicitly leaves them open.
+
+## Build, Integrate, and Effort Assessment
+
+| Capability | Likely own/build | Likely integrate | Relative risk/effort driver |
+| --- | --- | --- | --- |
+| Mission, artist, application, artwork, auction, bid and portal workflows | Domain state, role-aware UX, vetting, auction lifecycle, public pages, rules | CMS for editorial content where workflow and export fit | Large; unresolved lifecycle and moderation, plus mobile/accessibility scope. |
+| Identity and governance | Domain roles/permissions, approval policy, separation-of-duties checks, auditable decisions | Authentication/MFA primitive where suitable | Medium to large; identity recovery, access review, administrative staffing. |
+| Fund flow | Payment/donation/tranche state, allocation, reconciliation, reports, approval controls, exception handling | PSP checkout, onboarding, settlement and transfer execution | Extra large and gated; custody law, eligible countries, chargebacks, FX, pooling, and provider support dominate. |
+| Privacy and media | Consent, rights, moderation, retention, erasure, access policy and metadata | Private object storage, malware scanning, transcoding, KMS | Large; sensitive/minor data, retention and lifecycle tests. |
+| Communications | Subscriber state, explicit confirmation/unsubscribe, content approval, posting audit | Email delivery; official social API only after approval | Small-medium newsletter; social integration is medium-large and external-review constrained. Manual social posting is viable initially. |
+| Operations | Deployment configuration, authorization tests, runbooks, alert thresholds, restore/recovery and incident exercises | Managed hosting, database, monitoring, secrets and backup primitives | Medium-large; budget, named operators, EU residency, RPO/RTO and support coverage. |
+
+The roadmap's relative bands are **defensible as ordering only**, not as estimates. Without named team members, actual Superteam availability/skills, stack, scope acceptance criteria, vendor lead times, budget, and working capacity, labels such as `large` or `extra large` cannot support dates, staffing, or confidence ranges. Calibrate after discovery into independently estimable vertical slices, separating engineering effort from elapsed vendor/legal review time. Re-estimate when high-impact assumptions resolve; include operation and compliance work, not only feature coding.
+
+## Superteam and RDCF Use Conditions
+
+### Verified Facts
+
+* The user states Superteam and RDCF are theirs and wants Superteam to build the product; local architecture docs identify Superteam as intended build-time tooling, not a runtime dependency (`docs/architecture/build-squad.md:6-18`; `docs/architecture/related-projects.md:21-24`).
+* The RDCF submodule is present at the verified commit `47140f3668c97ef96eabdb759fae05fd25ade71b` (`git submodule status`, accessed 2026-10-16).
+* RDCF's README explicitly says it is exploration-only, not wired into a live agent session, and not a Superteam replacement (`projects/racecar-discipleship-framework/README.md:19,35-47`). Its roster maps role/persona ideas and outer-ring delivery functions (`projects/racecar-discipleship-framework/ROSTER.md:1-29`).
+* Superteam could not be inspected from this environment: GitHub API returned 404 and `git ls-remote` returned 403, as documented in `docs/architecture/related-projects.md:36-40`. These responses do not establish the repository's visibility or the reason access failed.
+
+### Required Before Activation
+
+1. Obtain approved read-only repository access through the owner's normal GitHub access process; do not bypass access controls or share credentials in chat.
+2. Inspect the actual current agent definitions, instructions, workflows/hooks, command and shell access, MCP/tool grants, extension dependencies, network access, model/data routing, logging, secret injection, and permissions to write/merge/deploy. Review scope and privilege boundaries before enabling execution.
+3. Pin and review the exact Superteam revision; record which agent/config files are trusted, who maintains them, how updates are reviewed, and how they are disabled. Keep secrets out of prompts, logs, fixtures, and agent-readable files.
+4. Use least-privilege, isolated development credentials and synthetic data. No production payment credentials, personal/safeguarding records, independent payment release, or production deployment access for agents. Audit their tool use and review generated code.
+5. Onboard the squad to the BRD, decision-status vocabulary, domain glossary, architecture decisions, open-question owners, module boundaries, test conventions, acceptance criteria, and escalation path. Map RDCF roles to actual Superteam agents only after verifying that the live roster/configuration still matches.
+6. Keep named humans accountable for product acceptance, architecture decisions, privacy/security, legal classification, safeguarding, finances, release, and production support. Agents may research, implement, test, red-team, and prepare evidence; they do not provide legal determinations or authorize funds.
+
+RDCF can aid role discovery and collaboration language; it cannot prove Superteam's current behavior, grant tool permissions, or replace a technical security review. The user/team's available capacity is also unknown; RDCF's role roster is not evidence of staffed capacity.
+
+## Recommended Phases and Non-Negotiable Gates
+
+1. **Operating model and decisions.** Assign named product, board, legal, finance, privacy/safeguarding, technical, and operations owners. Resolve legal custody/structure, sale versus donation and tax/VAT treatment, refunds/chargebacks, accepted countries/currencies, fees, pooled funding math, quick donation semantics, mission failure/unspent-balance fallback, approval threshold, evidence standard, auction rules, and support model. Obtain provider confirmation for relevant countries and staged payout flows. **Gate:** qualified owners document an operable legal/finance model and provider evidence; otherwise change the product money model before implementing real-money paths.
+2. **Architecture and foundations.** Evaluate buy/build options by written scenarios; decide stack, region/data residency, identity, threat model, retention, rights, source-of-truth, audit, authorization, backups, RPO/RTO, monitoring, CI/review, incident response, data export, and support. Reconcile the ontology/ERDs and create reviewed migrations only after semantics are approved. **Gate:** decisions have owners and evidence; least privilege, privacy responsibilities, recovery tests, and operational coverage are measurable.
+3. **Synthetic-data, non-money vertical slice.** Deliver one role-based flow spanning application/vetting, mission and artist approval, artwork submission, public browsing, testimony moderation, and admin audit. Keep payout disabled. **Gate:** role/object authorization tests; consent, document privacy, retention/deletion and restricted-read audit tests; critical end-to-end/accessibility checks; support and incident path reviewed.
+4. **Auction and provider sandbox.** Add race-safe bidding, winner/nonpayer flow, payment/donation states, idempotent provider callbacks, settlement import/reconciliation, fee/shipping separation, refunds/chargebacks/reversals, mission-level pooled allocation and schedule versioning, dual-control approvals, transfer simulation, and exception queues. **Gate:** finance can reconcile normal, duplicate, delayed, out-of-order, failed, refunded, reversed, and manually recovered scenarios from provider records to internal totals; all discrepancies are visible and owned. No real funds.
+5. **Controlled pilot.** Only after legal/provider gates: restrict cohort, countries, limits and exposure; use named support coverage, manual review of high-risk operations, monitoring, staged rollout, tested rollback, and a communication/escalation plan. Exercise provider outage, restore, incident handling, access revocation, and payout reconciliation. **Gate:** board, legal, finance, technical, privacy/safeguarding, and operations sign off; no critical unresolved security/privacy findings; custody, support ownership, and recovery are proven.
+6. **Measured expansion.** Expand by cohort with published objective baselines and thresholds. Track settled/released/reconciled funds, evidence and sign-off, exceptions, onboarding, support load, privacy/security incidents, content failures, newsletter consent/opt-out, and recovery performance. Add richer shipping, automated social publishing, dashboards, graph analysis, RDF/OWL exchange, or separate services only with a measured need and funded ownership.
+
+**Stability is demonstrated operability:** prevent unauthorized actions; reconcile every incoming and outgoing money-state change; recover data and resume work after provider failure; identify and explain exceptions; honor consent, retention and erasure behavior; and provide support through named humans with tested runbooks. A demo and happy-path test are insufficient.
+
+## Primary Documentation Corrections Before Implementation
+
+1. Add a single decision register with `Decided`, `Proposed`, `Open`, owner, evidence/source, due/phase, and change history; trace each high-priority BRD decision into a product rule and testable acceptance criterion.
+2. Reconcile money concepts first: model auction proceeds and direct donations, mission-owned schedule versions, pooled allocations, provider settlements/events, refunds/chargebacks, fees/currency, releases, and reconciliation exceptions. Do not finalize mechanics until legal and finance owners approve semantics.
+3. Normalize approval vocabulary and state fields across views; document exact separation-of-duties rule and threshold logic, and how generic targets maintain referential integrity and auditable evidence.
+4. Resolve single versus multiple roles, optional organization on artist applications, application-to-artwork traceability, and all open ERD relations from BRD items 42-45.
+5. Define evidence as a first-class concept or explicitly document the report/testimony relationship and requiredness. Specify moderation, media rights/consent, privacy class, storage-key handling, retention, and minor/vulnerable-person safeguards.
+6. Add a data-lifecycle and audit matrix linking each sensitive record/action to authorized roles, retention/erasure rule, audit event, owner, and verification test. Mark which assertions are DB-enforced, application-enforced, or operational.
+7. Add a short document-level statement that the current ERDs are conceptual and not migrations; avoid treating candidate stack/vendor choices or relative effort bands as decisions/estimates.
+8. Extend the options docs with explicit document-store analysis and explain that graph/datastore transaction capability alone does not decide suitability. Keep capability-level assembly distinct from persistence choice.
+
+## External References
+
+All URLs were accessed on 2026-10-16. Vendor documentation below documents product behavior; it is not independent certification or a vendor selection.
+
+* PostgreSQL, [Transactions](https://www.postgresql.org/docs/current/tutorial-transactions.html): describes transactions as all-or-nothing operations, with intermediate changes hidden until commit and rollback on failure. This illustrates why atomic multi-record state changes matter; it does not prove PostgreSQL is selected.
+* PostgreSQL, [Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html): documents isolation levels and serialization anomalies. The implementation must still choose and test isolation/concurrency behavior, especially for bids and allocations.
+* Neo4j, [Transaction management](https://neo4j.com/docs/operations-manual/current/database-internals/transaction-management/): states that Neo4j transactions comply with ACID. This corrects any suggestion that graph systems inherently cannot support transactional money workflows; product fit, constraints, authorization, reporting, recovery, expertise, and operations still need validation.
+* W3C, [RDF 1.1 Concepts and Abstract Syntax](https://www.w3.org/TR/rdf11-concepts/): defines RDF graphs as sets of subject-predicate-object triples and datasets as collections of graphs. RDF is a representation/data model, not an operational payout policy.
+* W3C, [OWL 2 Web Ontology Language Overview](https://www.w3.org/TR/owl2-overview/): describes OWL semantics, reasoning tools, and profiles. This supports treating formal OWL as an interoperability/reasoning decision, not a prerequisite for a plain-language domain ontology.
+* MongoDB, [Transactions](https://www.mongodb.com/docs/manual/core/transactions/): documents atomic single-document operations and ACID multi-document/distributed transactions, and notes their performance cost and that they do not replace effective schema design. A fair comparison should therefore assess workload and operational trade-offs rather than claim that document databases lack transactions.
+
+## Limitations and Open Questions
+
+* No Dutch counsel, board, payment provider, bank, insurer, tax professional, or privacy professional was consulted. Whether the intended foundation may hold funds, how auction proceeds are classified, what licenses or structures apply, tax receipt eligibility, VAT, AML/sanctions duties, and data-processing obligations need qualified validation. No legal conclusion is made here.
+* No specific payment provider's country coverage, account model, settlement timing, staged payout support, refunds, chargebacks, reserves, fees, contract terms, or safeguarding responsibilities was verified. Provider marketing is not a substitute for a written flow review and sandbox evidence.
+* Superteam's actual repo, current agent configurations, tool/secret permissions, and capacity remain unverified because access failed. No attempt was made to bypass this restriction.
+* Product targets, complete acceptance criteria, named team/capacity, budget, hosting requirements, support hours, RPO/RTO, user research, and accessibility target are unavailable. Therefore effort bands, dates, throughput, and staffing cannot be responsibly quantified.
+* The present ERDs are conceptual, and this review did not create or execute a schema, threat model, DPIA, legal analysis, provider integration, or production-readiness assessment.
+
+### Next Research Questions
+
+* Who are the named product, board/finance, legal, privacy/safeguarding, technical, operations, and support owners, and what decision deadlines/capacity do they have?
+* What legal/provider flow is approved for custody, settlement, mission-level pooling, payout, refunds, and unspent balances, by country and currency?
+* What are the exact donation, auction, tranche schedule/versioning, approval threshold, evidence, fees, and non-paying-winner rules?
+* Which Superteam revision and agent/tool configurations are approved for inspection, and what isolated development permissions are acceptable?
+* What measurable pilot limits, support coverage, RPO/RTO, accessibility level, hosting budget, and success thresholds define production readiness?
+* Do user research or reporting obligations reveal a funded graph traversal or cross-organization RDF/OWL exchange use case?
+
+## Status
+
+Research complete for the evidence available in this workspace. Architecture direction is a recommendation only; legal, provider, Superteam-access, capacity, and product-policy questions remain open.

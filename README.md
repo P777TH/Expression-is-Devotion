@@ -1,4 +1,9 @@
-# Expression is Devotion — Business Requirements Document
+---
+title: Expression is Devotion Business Requirements
+description: Business requirements, product scope, governance, and open decisions for the Expression is Devotion platform
+---
+
+## Expression is Devotion — Business Requirements Document
 
 Oct 14, 2026 · @Teresa
 
@@ -306,3 +311,13 @@ A tech stack has been suggested (Next.js, EU-hosted Vercel, Supabase with EU dat
 | 50 | Design and UX | Languages for launch (Dutch, English, others?) and accessibility level | Locale and NFR targets | Medium |
 | 51 | Design and UX | Gallery page: sorting and filters (by mission, artist, open or sold) | New page | Medium |
 | 52 | Design and UX | Designs for gallery, mission, artist and testimony pages, the portals, forms and admin | Not yet in Figma | Medium |
+
+## 13. Architecture and project structure
+
+The current data models and stack-neutral architecture proposal are in
+[docs/architecture/README.md](docs/architecture/README.md). Standalone Mermaid
+sources for the four current ERDs are in [docs/architecture/erd/](docs/architecture/erd/).
+The original HTML viewers are under [html/](html/). Related build projects and
+the squad working agreement are listed in
+[docs/architecture/related-projects.md](docs/architecture/related-projects.md)
+and [docs/architecture/build-squad.md](docs/architecture/build-squad.md).

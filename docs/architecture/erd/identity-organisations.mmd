@@ -1,0 +1,148 @@
+erDiagram
+  USER ||--o| SUPPORTER_PROFILE : has
+  USER ||--o| ARTIST_PROFILE : has
+  USER ||--o{ MISSION_MISSIONARY : joins
+  MISSION ||--|{ MISSION_MISSIONARY : includes
+  ORGANISATION ||--o{ MISSION : runs
+  ORGANISATION ||--|{ CONTACT_PERSON : reached_via
+  ORGANISATION ||--o{ BOARD_MEMBER : governed_by
+  ORGANISATION ||--o{ VERIFICATION : checked_by
+  ORGANISATION ||--|| VERIFICATION_SCHEDULE : reverified_on
+  ORGANISATION ||--o{ ADDRESS : located_at
+  ORGANISATION ||--o{ VOG_RECORD : covers
+  USER ||--o{ VOG_RECORD : subject_of
+  SUPPORTER_PROFILE ||--o{ ADDRESS : ships_to
+  SUPPORTER_PROFILE ||--o{ PAYMENT_METHOD_TOKEN : pays_with
+  USER ||--o{ GUARDIAN_LINK : guards
+  USER ||--o{ GUARDIAN_LINK : is_guarded
+  KEY_REFERENCE ||--o{ ORGANISATION : protects
+  KEY_REFERENCE ||--o{ CONTACT_PERSON : protects
+  KEY_REFERENCE ||--o{ SUPPORTER_PROFILE : protects
+  KEY_REFERENCE ||--o{ ARTIST_PROFILE : protects
+  USER {
+    uuid id PK
+    string email UK
+    string password_hash "argon2 or bcrypt only"
+    string role
+    string status
+    bool mfa_enabled
+    string locale
+  }
+  ORGANISATION {
+    uuid id PK
+    uuid key_id FK
+    string legal_name
+    string country_code
+    string registration_type
+    string registration_number_enc "encrypted field"
+    string rsin_enc "encrypted field"
+    bool anbi_confirmed
+    string iban_enc "encrypted field"
+    string bic
+    string status
+  }
+  CONTACT_PERSON {
+    uuid id PK
+    uuid organisation_id FK
+    uuid key_id FK
+    string name
+    string role
+    string email_enc "encrypted field"
+    string phone_enc "encrypted field"
+  }
+  BOARD_MEMBER {
+    uuid id PK
+    uuid organisation_id FK
+    string name
+    string role
+  }
+  VERIFICATION {
+    uuid id PK
+    uuid organisation_id FK
+    string check_type "kvk, anbi, iban_name_match, anti_terror, safeguarding, aml"
+    string result
+    uuid checked_by FK
+    timestamp checked_at
+    string evidence_ref "reference only"
+  }
+  VERIFICATION_SCHEDULE {
+    uuid id PK
+    uuid organisation_id FK
+    int interval_months
+    timestamp next_due_at
+  }
+  VOG_RECORD {
+    uuid id PK
+    uuid user_id FK
+    uuid organisation_id FK
+    string result
+    date checked_on
+    date valid_until
+    uuid verified_by FK
+    string evidence_ref "outcome and date only, no certificate copy"
+  }
+  ADDRESS {
+    uuid id PK
+    string owner_type
+    uuid owner_id
+    string street
+    string postcode
+    string city
+    string country_code
+  }
+  MISSION {
+    uuid id PK
+    uuid organisation_id FK
+    string name
+    string country_region
+    string beneficiary_group
+    text description
+    decimal budget_amount
+    string budget_currency
+    string status
+  }
+  MISSION_MISSIONARY {
+    uuid id PK
+    uuid mission_id FK
+    uuid user_id FK
+    string role
+    timestamp joined_at
+  }
+  ARTIST_PROFILE {
+    uuid id PK
+    uuid user_id FK
+    uuid key_id FK
+    string display_name
+    string instagram_handle
+    text statement
+    date date_of_birth "restricted, encrypted"
+    timestamp age_consent_at
+  }
+  GUARDIAN_LINK {
+    uuid id PK
+    uuid child_user_id FK
+    uuid guardian_user_id FK
+    timestamp verified_at
+  }
+  SUPPORTER_PROFILE {
+    uuid id PK
+    uuid user_id FK
+    uuid key_id FK
+    string phone_enc "encrypted field"
+    string display_name_pseudonym
+  }
+  PAYMENT_METHOD_TOKEN {
+    uuid id PK
+    uuid supporter_id FK
+    string psp_token_ref "no card or bank data stored"
+    string method
+    string last4
+  }
+  KEY_REFERENCE {
+    uuid id PK
+    string kms_key_arn "key held in KMS, not in this database"
+    string purpose
+    int version
+    timestamp rotated_at
+    string status
+  }

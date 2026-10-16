@@ -1,0 +1,3 @@
+[submodule "projects/racecar-discipleship-framework"]
+	path = projects/racecar-discipleship-framework
+	url = https://github.com/trust-fullstop/racecar-discipleship-framework.git
