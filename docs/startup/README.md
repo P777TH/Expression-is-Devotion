@@ -49,8 +49,11 @@ attracts the next artists and supporters, so the engine compounds.
 | 4 | [Work packages and 90-day plan](04-work-packages-and-90-day-plan.md) | Who does what, in which order, with which acceptance criteria? |
 | 5 | [Decisions and risks](05-decisions-and-risks.md) | Which of the 52 open BRD items must be decided now, and which can wait? |
 
-A visual one-page summary in the brand palette is in
-[html/startup_work_package_v1.html](../../html/startup_work_package_v1.html).
+**Short on time?** Read the visual
+[one-pager](../../html/startup_work_package_v1.html), then go straight to
+[05 Decisions and risks](05-decisions-and-risks.md): those 12 decisions are
+all that blocks the pilot. Website look and feel options are in the
+[mockups](../../html/mockups/index.html).
 
 ## Startup principles used
 
