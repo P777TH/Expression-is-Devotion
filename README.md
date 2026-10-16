@@ -321,3 +321,8 @@ The original HTML viewers are under [html/](html/). Related build projects and
 the squad working agreement are listed in
 [docs/architecture/related-projects.md](docs/architecture/related-projects.md)
 and [docs/architecture/build-squad.md](docs/architecture/build-squad.md).
+
+A lean, self-funding startup path to launch this platform (Campaign Drops,
+funding engine, lean EU stack, work packages and a 90-day plan) is in
+[docs/startup/README.md](docs/startup/README.md), with a visual one-pager at
+[html/startup_work_package_v1.html](html/startup_work_package_v1.html).
