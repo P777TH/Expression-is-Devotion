@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Expression is Devotion - The Devotion Engine (Startup Work Package v1)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#FF0081;--blue:#1A66DE;--yellow:#FFD400;--bg:#FFFDF7;--alt:#E5E5E5;--text:#232323}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:20px;line-height:1.5}
+main{max-width:1200px;margin:0 auto;padding:48px 24px 96px}
+h1{font-size:64px;line-height:1.05;margin:0 0 16px;font-weight:700}
+h2{font-size:36px;margin:72px 0 20px;font-weight:700}
+h3{font-size:24px;margin:0 0 8px}
+.kicker{display:inline-block;background:var(--yellow);padding:4px 12px;font-size:16px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:16px}
+.lead{font-size:24px;max-width:860px}
+.pink{color:var(--pink)}.blue{color:var(--blue)}
+.grid{display:grid;gap:20px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.card{background:#fff;border:2px solid var(--text);border-radius:16px;padding:20px 22px;font-size:17px}
+.card.p{border-color:var(--pink)}.card.b{border-color:var(--blue)}.card.y{border-color:var(--yellow);background:#FFFBE0}
+.wheel{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.step{background:#fff;border:2px solid var(--blue);border-radius:999px;padding:10px 18px;font-size:16px;font-weight:700}
+.arrow{color:var(--pink);font-weight:700;font-size:24px}
+table{width:100%;border-collapse:collapse;font-size:16px;background:#fff}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--alt);vertical-align:top}
+th{background:var(--text);color:#fff}
+.tag{display:inline-block;border-radius:6px;padding:2px 8px;font-size:13px;font-weight:700}
+.s0{background:var(--yellow)}.s1{background:var(--blue);color:#fff}.s2{background:var(--pink);color:#fff}
+.timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.timeline div{border-top:6px solid var(--blue);padding-top:10px;font-size:16px}
+.timeline div:nth-child(4){border-color:var(--pink)}
+.north{background:var(--blue);color:#fff;border-radius:16px;padding:28px;font-size:24px}
+.north b{color:var(--yellow)}
+footer{margin-top:72px;font-size:14px;color:#555}
+@media(max-width:700px){h1{font-size:40px}.timeline{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<span class="kicker">Startup work package v1 - draft for review</span>
+<h1>The <span class="pink">Devotion</span> <span class="blue">Engine</span></h1>
+<p class="lead">Art becomes funding. Funding becomes milestones. Milestones become testimonies.
+Testimonies bring the next artists and supporters. A lean, self-funding way to launch
+Expression is Devotion, without losing a single part of the original vision.</p>
+
+<h2>The essence we protect</h2>
+<div class="grid g3">
+<div class="card p"><h3>Expression is devotion</h3>Art is offered as worship and service. The artist's "why" sits next to every piece.</div>
+<div class="card b"><h3>Vetted missions only</h3>Vetting comes before visibility. Only approved missions receive funds.</div>
+<div class="card y"><h3>Staged, evidenced release</h3>Tranches tied to milestones and testimonies, approved by two people.</div>
+<div class="card b"><h3>Testimony is the heartbeat</h3>Every euro has a story trail back to the supporter.</div>
+<div class="card p"><h3>Trust by design</h3>Separation of duties, audit log, GDPR consent, no card data stored.</div>
+<div class="card y"><h3>Human authority</h3>The board decides about money. AI assists, never approves.</div>
+</div>
+
+<h2>The flywheel</h2>
+<div class="wheel">
+<span class="step">Artists donate art</span><span class="arrow">&rarr;</span>
+<span class="step">Campaign Drop</span><span class="arrow">&rarr;</span>
+<span class="step">Supporters bid, buy prints, fund a milestone</span><span class="arrow">&rarr;</span>
+<span class="step">Stichting grants tranche</span><span class="arrow">&rarr;</span>
+<span class="step">Mission delivers + testimony</span><span class="arrow">&rarr;</span>
+<span class="step">Shared with churches, social, newsletter</span><span class="arrow">&#8635;</span>
+</div>
+
+<h2>One product: the Campaign Drop</h2>
+<div class="grid g4">
+<div class="card"><h3>1 to 3 missions</h3>Vetted, with a public goal split into 2 to 4 milestones.</div>
+<div class="card"><h3>10 to 25 artworks</h3>Donated by Founding Artists, curated for readiness.</div>
+<div class="card"><h3>7 to 10 days</h3>Timed online auction, soft close, optional live closing evening in a church.</div>
+<div class="card"><h3>4 ways to give</h3>Bid, buy a print, fund a milestone, join the Devotion Circle.</div>
+</div>
+<p>Four drops a year: <b>Lent/Easter</b>, <b>Pentecost</b>, <b>Harvest</b>, <b>Advent</b>, plus 72-hour micro-drops in between.</p>
+
+<h2>Funding engine: two streams, never mixed</h2>
+<div class="grid g3">
+<div class="card p"><h3>Mission fund</h3>Auctions, prints, fund-a-milestone, earmarked gifts. 100% granted to missions (minus provider fees, shown openly).</div>
+<div class="card b"><h3>Operations fund</h3>Devotion Circle share, optional tips, drop sponsors, foundation grants. About 40 to 60 Circle members cover Stage 0 costs.</div>
+<div class="card y"><h3>Grant model</h3>The stichting receives income and grants it in tranches under a grant agreement, with a dual-authorisation bank account. To confirm with a legal advisor.</div>
+</div>
+<table style="margin-top:20px">
+<tr><th>Channel</th><th>Stage</th><th>Effort</th><th>Impact</th></tr>
+<tr><td>Campaign Drop auctions</td><td><span class="tag s0">0</span></td><td>Medium</td><td>High</td></tr>
+<tr><td>Fund a milestone (quick donate)</td><td><span class="tag s0">0</span></td><td>Low</td><td>High</td></tr>
+<tr><td>Devotion Circle (monthly)</td><td><span class="tag s0">0</span></td><td>Low</td><td>High, recurring</td></tr>
+<tr><td>Prints and editions (print on demand)</td><td><span class="tag s0">0</span>-<span class="tag s1">1</span></td><td>Low</td><td>Medium</td></tr>
+<tr><td>Gallery Sunday church hubs</td><td><span class="tag s1">1</span></td><td>Medium</td><td>High for growth</td></tr>
+<tr><td>Match the drop, drop sponsors</td><td><span class="tag s1">1</span></td><td>Low</td><td>High</td></tr>
+<tr><td>Annual products, commissions, workshops</td><td><span class="tag s2">2</span></td><td>Medium</td><td>Medium</td></tr>
+</table>
+
+<h2>Three stages, one data model</h2>
+<div class="grid g3">
+<div class="card y"><h3><span class="tag s0">Stage 0</span> Launch</h3>Thin Next.js site + Supabase EU + Mollie or Stripe + Brevo or MailerLite + Tally + Canva frames. About 50 to 120 euro a month.</div>
+<div class="card b"><h3><span class="tag s1">Stage 1</span> Platform v1</h3>Role portals, in-app approvals, own auction engine, post formats. Built from the ERDs on the same codebase.</div>
+<div class="card p"><h3><span class="tag s2">Stage 2</span> Scale</h3>API posting, shipping tables, dashboards, more languages. Only when metrics justify it.</div>
+</div>
+
+<h2>First 90 days</h2>
+<div class="timeline">
+<div><b>Weeks 1 to 5</b><br>Legal and governance, grant model confirmed, board of three, bank with dual authorisation</div>
+<div><b>Weeks 2 to 8</b><br>Pilot missions vetted, Founding Artists, brand and content kit</div>
+<div><b>Weeks 3 to 9</b><br>Lean site and giving, sandbox tested end to end</div>
+<div><b>Weeks 11 to 12</b><br>Pilot Campaign Drop live, closing evening</div>
+<div><b>Weeks 12 to 14</b><br>Tranche 1, testimony, public report, Stage 1 decision</div>
+</div>
+
+<h2>North Star</h2>
+<div class="north">Milestones <b>funded and evidenced</b> per quarter.</div>
+
+<footer>Expression is Devotion - startup work package v1, 16 Oct 2026. Based on the BRD (README.md) and the four ERDs in docs/architecture/erd.
+Full detail in docs/startup/. Figures are illustrative and every item is a proposal until the owner marks it Decided.</footer>
+</main>
+</body>
+</html>
