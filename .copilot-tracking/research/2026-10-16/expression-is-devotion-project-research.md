@@ -270,6 +270,21 @@ For planning handoff, use a **capability-level assemble-first strategy around a 
 4. Approve architecture and nonfunctional targets (data residency, RPO/RTO, accessibility, retention, support, budget), then reconcile ERDs before schema/migration work.
 5. Deliver a synthetic-data, no-money vertical slice; only then proceed to a provider sandbox and controlled pilot gates.
 
+## Teresa Decision Issues
+
+Eight GitHub issues were created to turn the BRD's 52 open questions into grouped decision tasks. Each issue links to this research document and cites the relevant BRD open-item IDs. Teresa is named as decision owner in each issue; they remain unassigned because her GitHub username was not identifiable among the repository's assignable accounts.
+
+| Issue | Decision task | BRD items |
+| --- | --- | --- |
+| https://github.com/P777TH/Expression-is-Devotion/issues/1 | Legal and compliance model | 1-8 |
+| https://github.com/P777TH/Expression-is-Devotion/issues/2 | Payment provider, donations, and tranche operations | 9-17 |
+| https://github.com/P777TH/Expression-is-Devotion/issues/3 | Auction, shipping, and mission operating rules | 18-25 |
+| https://github.com/P777TH/Expression-is-Devotion/issues/4 | Governance, safeguarding, and human ownership | 26-31 |
+| https://github.com/P777TH/Expression-is-Devotion/issues/5 | Build approach, stack, and operational security | 32-41 |
+| https://github.com/P777TH/Expression-is-Devotion/issues/6 | ERD reconciliation | 42-45 |
+| https://github.com/P777TH/Expression-is-Devotion/issues/7 | Testimony moderation and social publishing | 46-48 |
+| https://github.com/P777TH/Expression-is-Devotion/issues/8 | Newsletter, language, accessibility, and public UX | 49-52 |
+
 ## Limitations
 
 * This research is based on local BRD/architecture files, the accessible RDCF submodule, and public technical product documentation accessed 2026-10-16.
