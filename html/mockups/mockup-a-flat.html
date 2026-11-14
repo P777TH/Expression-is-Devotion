@@ -1,0 +1,43 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup A - Flat Gallery Wall</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#FF0081;--blue:#1A66DE;--yellow:#FFD400;--bg:#FFFDF7;--alt:#E5E5E5;--text:#232323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:400 18px/1.5 Inter,system-ui,sans-serif}
+a{color:inherit;text-decoration:none}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:2px solid var(--text);display:flex;align-items:center;gap:28px;padding:14px 40px}
+.logo{font-weight:900;font-size:20px}.logo span{color:var(--pink)}
+.nav{display:flex;gap:6px;flex:1}.nav a{padding:8px 14px;border-radius:999px;font-weight:700;font-size:15px}.nav a.on{background:var(--text);color:var(--bg)}.nav a:hover{background:var(--alt)}
+.give{background:var(--pink);color:#fff;font-weight:700;padding:10px 22px;border-radius:999px}
+.hero{display:grid;grid-template-columns:1.2fr 1fr;min-height:480px}
+.hero .l{background:var(--yellow);padding:64px 40px}.hero .r{background:conic-gradient(from 200deg at 30% 60%,#FF0081,#FFD400,#1A66DE,#FF0081)}
+.eyebrow{font-weight:700;font-size:14px;letter-spacing:.08em;text-transform:uppercase}
+h1{font-size:72px;line-height:1;margin:12px 0 20px;font-weight:900}
+.count{display:flex;gap:10px;margin:24px 0}.count div{background:var(--text);color:var(--yellow);padding:10px 14px;font-weight:900;font-size:28px;min-width:72px;text-align:center}.count small{display:block;font-size:12px;color:#fff;font-weight:400}
+.btn{display:inline-block;padding:14px 26px;font-weight:700;border-radius:999px;margin-right:8px}.b1{background:var(--text);color:#fff}.b2{background:#fff;border:2px solid var(--text)}
+section{padding:64px 40px}h2{font-size:40px;margin:0 0 24px;font-weight:900}
+.filters{display:flex;gap:8px;margin-bottom:24px}.filters span{border:2px solid var(--text);padding:6px 14px;border-radius:999px;font-size:14px;font-weight:700}.filters span.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.work .img{aspect-ratio:4/5;border-radius:4px}.work h3{margin:12px 0 2px;font-size:20px}.meta{font-size:14px;color:#555}.bid{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-weight:700}.bid a{background:var(--blue);color:#fff;padding:6px 14px;border-radius:999px;font-size:14px}
+.missions{background:var(--blue);color:#fff}.mrow{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}.m{background:#fff;color:var(--text);padding:24px;border-radius:4px}.m h3{margin:0;font-size:24px}.prog{height:10px;background:var(--alt);margin:14px 0 6px}.prog i{display:block;height:100%;background:var(--pink)}
+.ways{display:grid;grid-template-columns:repeat(4,1fr);gap:0}.ways div{padding:28px;border:2px solid var(--text);margin:-1px}.ways b{font-size:22px;display:block;margin-bottom:6px}
+.quote{background:var(--pink);color:#fff;font-size:34px;font-weight:700;line-height:1.3;padding:72px 40px}.quote small{display:block;font-size:16px;font-weight:400;margin-top:16px}
+footer{padding:32px 40px;border-top:2px solid var(--text);font-size:14px}
+.note{position:fixed;bottom:12px;left:12px;background:var(--text);color:#fff;font-size:12px;padding:6px 10px;border-radius:6px}.note a{color:var(--yellow)}
+@media(max-width:800px){.hero,.grid,.mrow,.ways{grid-template-columns:1fr}.nav{display:none}h1{font-size:44px}}
+</style></head><body>
+<header class="bar"><a class="logo" href="#">Expression <span>is</span> Devotion</a>
+<nav class="nav"><a class="on" href="#">Drop</a><a href="#">Missions</a><a href="#">Artists</a><a href="#">Gallery</a><a href="#">Testimonies</a><a href="#">About</a></nav>
+<a class="give" href="#">Give</a></header>
+<div class="hero"><div class="l"><div class="eyebrow">Advent Drop 2026 · Live now</div><h1>Light in darkness.</h1>
+<p>18 artworks, donated as worship. Every bid funds a milestone for one of three vetted missions.</p>
+<div class="count"><div>05<small>days</small></div><div>14<small>hours</small></div><div>32<small>min</small></div></div>
+<a class="btn b1" href="#">Browse the art</a><a class="btn b2" href="#">Fund a milestone</a></div><div class="r"></div></div>
+<section><h2>The art</h2><div class="filters"><span class="on">All</span><span>Clinic Light</span><span>Water for Ngong</span><span>Bible Translation</span><span>Open</span><span>Sold</span></div>
+<div class="grid"><div class="work"><div class="img" style="background:conic-gradient(from 200deg at 30% 60%,#FF0081,#FFD400,#1A66DE,#FF0081)"></div><h3>Dawn over Kibera</h3><div class="meta">Ruth M. · for Clinic Light</div><div class="bid"><span>Current bid €420</span><a href="#">Bid</a></div></div><div class="work"><div class="img" style="background:radial-gradient(circle at 70% 30%,#FFD400 0 18%,transparent 19%),linear-gradient(160deg,#1A66DE,#232323)"></div><h3>Still Waters</h3><div class="meta">Daniel K. · for Water for Ngong</div><div class="bid"><span>Current bid €260</span><a href="#">Bid</a></div></div><div class="work"><div class="img" style="background:repeating-linear-gradient(45deg,#FF0081 0 18px,#FFFDF7 18px 36px)"></div><h3>Every Tongue</h3><div class="meta">Ana P. · for Bible Translation</div><div class="bid"><span>Current bid €180</span><a href="#">Bid</a></div></div><div class="work"><div class="img" style="background:radial-gradient(circle at 30% 40%,#FFFDF7 0 10%,#FFD400 11% 30%,#FF0081 31% 60%,#1A66DE 61%)"></div><h3>The Lamp</h3><div class="meta">Joost V. · for Clinic Light</div><div class="bid"><span>Current bid €540</span><a href="#">Bid</a></div></div><div class="work"><div class="img" style="background:linear-gradient(90deg,#1A66DE 0 33%,#FFD400 33% 66%,#FF0081 66%)"></div><h3>Harvest</h3><div class="meta">Mirjam S. · for Water for Ngong</div><div class="bid"><span>Current bid €300</span><a href="#">Bid</a></div></div><div class="work"><div class="img" style="background:conic-gradient(at 50% 100%,#232323,#1A66DE,#FFFDF7,#FFD400,#232323)"></div><h3>Night Watch</h3><div class="meta">Samuel O. · for Bible Translation</div><div class="bid"><span>Current bid €210</span><a href="#">Bid</a></div></div></div></section>
+<section class="missions"><h2>The missions</h2><div class="mrow"><div class="m"><div class="eyebrow">Kenya</div><h3>Clinic Light</h3><p>Solar power for a rural clinic</p><div class="prog"><i style="width:62%"></i></div><small>€4,960 of 8,000 · milestone 1 of 3</small></div><div class="m"><div class="eyebrow">Kenya</div><h3>Water for Ngong</h3><p>Borehole for 300 families</p><div class="prog"><i style="width:41%"></i></div><small>€2,460 of 6,000 · milestone 1 of 3</small></div><div class="m"><div class="eyebrow">Peru</div><h3>Bible Translation</h3><p>Scripture in Quechua for 2 villages</p><div class="prog"><i style="width:78%"></i></div><small>€3,900 of 5,000 · milestone 1 of 3</small></div></div></section>
+<div class="quote">"The clinic had light for the first night birth. Thank you for every brushstroke."<small>Testimony · Clinic Light, Kenya · milestone 1 released</small></div>
+<section><h2>Four ways to give</h2><div class="ways"><div><b>Bid</b>Win a piece, fund a mission.</div><div><b>Print</b>Buy a print of any drop artwork.</div><div><b>Fund a milestone</b>Give directly, from €5.</div><div><b>Devotion Circle</b>Monthly, from €5.</div></div></section>
+<footer>Expression is Devotion · stichting (ANBI pending) · 100% of art proceeds granted to missions · Sample content for mockup only</footer>
+<div class="note">Mockup A · Flat Gallery Wall · <a href="index.html">all mockups</a></div>
+</body></html>

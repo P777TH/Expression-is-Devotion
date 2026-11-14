@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup B - Stained Glass</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#FF0081;--blue:#1A66DE;--yellow:#FFD400;--bg:#FFFDF7;--text:#232323}
+*{box-sizing:border-box}body{margin:0;color:var(--text);font:400 17px/1.5 Inter,system-ui,sans-serif;background:#f6efe6;min-height:100vh;overflow-x:hidden}
+.light{position:fixed;inset:0;z-index:-1;filter:blur(70px);opacity:.75}
+.light i{position:absolute;border-radius:50%;animation:drift 18s ease-in-out infinite alternate}
+.light i:nth-child(1){width:48vw;height:48vw;background:var(--pink);top:-10vw;left:-8vw}
+.light i:nth-child(2){width:42vw;height:42vw;background:var(--blue);top:20vh;right:-10vw;animation-delay:-6s}
+.light i:nth-child(3){width:36vw;height:36vw;background:var(--yellow);bottom:-12vw;left:30vw;animation-delay:-12s}
+@keyframes drift{to{transform:translate(6vw,4vh) scale(1.1)}}
+.glass{background:rgba(255,253,247,.45);backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);border:1px solid rgba(255,255,255,.7);box-shadow:0 10px 40px rgba(35,35,35,.12);border-radius:28px}
+a{color:inherit;text-decoration:none}
+.top{display:flex;justify-content:space-between;align-items:center;margin:20px auto 0;max-width:1180px;padding:12px 22px}
+.logo{font-weight:900}.logo span{color:var(--pink)}.top .give{background:var(--text);color:#fff;padding:10px 20px;border-radius:999px;font-weight:700}
+main{max-width:1180px;margin:0 auto;padding:24px 22px 140px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;padding:48px}
+h1{font-size:68px;line-height:1;margin:10px 0 18px;font-weight:900}
+.chip{display:inline-block;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.6);font-size:13px;font-weight:700}
+.feature{border-radius:24px;min-height:340px;background:radial-gradient(circle at 30% 40%,#FFFDF7 0 10%,#FFD400 11% 30%,#FF0081 31% 60%,#1A66DE 61%);position:relative;overflow:hidden}
+.feature .tag{position:absolute;left:16px;right:16px;bottom:16px;padding:14px 18px;border-radius:18px}
+.btn{display:inline-block;padding:13px 24px;border-radius:999px;font-weight:700;margin:6px 8px 0 0}.b1{background:var(--pink);color:#fff}.b2{background:rgba(255,255,255,.7)}
+h2{font-size:34px;margin:56px 0 18px;font-weight:900}
+.row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{padding:16px}.card .img{aspect-ratio:1;border-radius:18px}.card h3{margin:12px 4px 0;font-size:19px}.card p{margin:2px 4px;font-size:14px;opacity:.75}
+.card .bid{display:flex;justify-content:space-between;align-items:center;margin:10px 4px 2px;font-weight:700}.card .bid a{background:var(--blue);color:#fff;padding:6px 14px;border-radius:999px;font-size:14px}
+.m{padding:24px}.ring{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-weight:900;margin-bottom:10px}
+.t{padding:40px;font-size:28px;font-weight:700;line-height:1.35}.t small{display:block;font-size:15px;font-weight:400;margin-top:12px;opacity:.75}
+.dock{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);display:flex;gap:4px;padding:8px;z-index:9;border-radius:999px}
+.dock a{display:flex;flex-direction:column;align-items:center;font-size:12px;font-weight:700;padding:8px 16px;border-radius:999px;min-width:72px}
+.dock a span{font-size:20px;line-height:1}.dock a.on{background:var(--text);color:#fff}
+.note{position:fixed;top:12px;right:12px;background:var(--text);color:#fff;font-size:12px;padding:6px 10px;border-radius:6px;z-index:10}.note a{color:var(--yellow)}
+@media(max-width:820px){.hero,.row{grid-template-columns:1fr}h1{font-size:44px}.hero{padding:24px}.dock a{min-width:56px;padding:8px 8px}}
+</style></head><body>
+<div class="light"><i></i><i></i><i></i></div>
+<header class="top glass"><a class="logo" href="#">Expression <span>is</span> Devotion</a><a class="give" href="#">Give</a></header>
+<main>
+<section class="hero glass"><div><span class="chip">Advent Drop 2026 · 5 days left</span><h1>Light in darkness.</h1>
+<p>Like light through stained glass, every donated artwork carries a story into a mission field. Bid, buy a print, or fund a milestone.</p>
+<a class="btn b1" href="#">Enter the drop</a><a class="btn b2" href="#">Join the Devotion Circle</a></div>
+<div class="feature"><div class="tag glass"><b>The Lamp</b> · Joost V.<br><small>Current bid €540 · for Clinic Light, Kenya</small></div></div></section>
+<h2>From the drop</h2><div class="row"><div class="card glass"><div class="img" style="background:conic-gradient(from 200deg at 30% 60%,#FF0081,#FFD400,#1A66DE,#FF0081)"></div><h3>Dawn over Kibera</h3><p>Ruth M. · for Clinic Light</p><div class="bid"><span>€420</span><a href="#">Bid</a></div></div><div class="card glass"><div class="img" style="background:radial-gradient(circle at 70% 30%,#FFD400 0 18%,transparent 19%),linear-gradient(160deg,#1A66DE,#232323)"></div><h3>Still Waters</h3><p>Daniel K. · for Water for Ngong</p><div class="bid"><span>€260</span><a href="#">Bid</a></div></div><div class="card glass"><div class="img" style="background:repeating-linear-gradient(45deg,#FF0081 0 18px,#FFFDF7 18px 36px)"></div><h3>Every Tongue</h3><p>Ana P. · for Bible Translation</p><div class="bid"><span>€180</span><a href="#">Bid</a></div></div><div class="card glass"><div class="img" style="background:radial-gradient(circle at 30% 40%,#FFFDF7 0 10%,#FFD400 11% 30%,#FF0081 31% 60%,#1A66DE 61%)"></div><h3>The Lamp</h3><p>Joost V. · for Clinic Light</p><div class="bid"><span>€540</span><a href="#">Bid</a></div></div><div class="card glass"><div class="img" style="background:linear-gradient(90deg,#1A66DE 0 33%,#FFD400 33% 66%,#FF0081 66%)"></div><h3>Harvest</h3><p>Mirjam S. · for Water for Ngong</p><div class="bid"><span>€300</span><a href="#">Bid</a></div></div><div class="card glass"><div class="img" style="background:conic-gradient(at 50% 100%,#232323,#1A66DE,#FFFDF7,#FFD400,#232323)"></div><h3>Night Watch</h3><p>Samuel O. · for Bible Translation</p><div class="bid"><span>€210</span><a href="#">Bid</a></div></div></div>
+<h2>Missions in this drop</h2><div class="row"><div class="m glass"><div class="ring" style="background:conic-gradient(#FF0081 62%,rgba(255,255,255,.6) 0)"><span style="background:#fffdf7;border-radius:50%;width:64px;height:64px;display:grid;place-items:center">62%</span></div><b style="font-size:21px">Clinic Light</b><p>Solar power for a rural clinic<br><small>€4,960 of 8,000 · Kenya</small></p></div><div class="m glass"><div class="ring" style="background:conic-gradient(#1A66DE 41%,rgba(255,255,255,.6) 0)"><span style="background:#fffdf7;border-radius:50%;width:64px;height:64px;display:grid;place-items:center">41%</span></div><b style="font-size:21px">Water for Ngong</b><p>Borehole for 300 families<br><small>€2,460 of 6,000 · Kenya</small></p></div><div class="m glass"><div class="ring" style="background:conic-gradient(#FFD400 78%,rgba(255,255,255,.6) 0)"><span style="background:#fffdf7;border-radius:50%;width:64px;height:64px;display:grid;place-items:center">78%</span></div><b style="font-size:21px">Bible Translation</b><p>Scripture in Quechua for 2 villages<br><small>€3,900 of 5,000 · Peru</small></p></div></div>
+<h2>Fruit</h2><div class="t glass">"For the first time, the grandmothers in Huancarama heard the Psalms in their own language."<small>Testimony · Bible Translation, Peru · milestone 2 released</small></div>
+</main>
+<nav class="dock glass"><a class="on" href="#"><span>&#9670;</span>Drop</a><a href="#"><span>&#9673;</span>Missions</a><a href="#"><span>&#9998;</span>Artists</a><a href="#"><span>&#9638;</span>Gallery</a><a href="#"><span>&#10077;</span>Stories</a><a href="#"><span>&#9829;</span>Give</a></nav>
+<div class="note">Mockup B · Stained Glass · <a href="index.html">all mockups</a></div>
+</body></html>

@@ -7,6 +7,37 @@ description: Business requirements, product scope, governance, and open decision
 
 Oct 14, 2026 · @Teresa
 
+> **Start here.** This README is the full Business Requirements Document (BRD).
+> You do not need to read it top to bottom. Use the guide below.
+
+### Reading guide
+
+| Time you have | Read this | You will know |
+| --- | --- | --- |
+| 5 minutes | [The Devotion Engine one-pager](html/startup_work_package_v1.html) | The startup idea at a glance: drops, funding, stages, 90 days |
+| 10 minutes | [Look and feel mockups](html/mockups/index.html) | Three design directions for the website to choose from |
+| 20 minutes | [Startup package overview](docs/startup/README.md), then [the 12 pilot decisions](docs/startup/05-decisions-and-risks.md) | What you need to decide first, with a suggested answer for each |
+| 1 hour | This BRD, sections 1 to 7 | The full product: roles, features, governance, payments |
+| Deep dive | [Architecture](docs/architecture/README.md) and the ERD viewers in [html/](html/) | Data model and technical design for builders |
+
+### Your next three actions
+
+1. Say yes, no or change to decisions **D1 to D12** in [05-decisions-and-risks.md](docs/startup/05-decisions-and-risks.md).
+2. Pick a look and feel (A, B or C) in the [mockups](html/mockups/index.html).
+3. Name the first two or three pilot missions and the board of three.
+
+### Repository map
+
+| Folder | What is inside | For whom |
+| --- | --- | --- |
+| `README.md` | This BRD: requirements, governance, open items | Owner, board |
+| `docs/startup/` | Startup work package: concept, funding engine, lean stack, work packages, decisions | Owner, board, team |
+| `html/` | One-pager, website mockups, interactive ERD viewers | Everyone (open in a browser) |
+| `docs/architecture/` | Architecture views, options, ERD sources, roadmap | Builders |
+| `projects/` | Linked build-squad framework (Git submodule) | Builders |
+
+---
+
 ## 1. Executive summary
 
 Expression is Devotion is a faith-based platform that turns donated art into staged funding for vetted Christian missions, and gives missions one place to share testimonies with followers. Artists donate a piece and choose one approved mission per artwork (a mission can be funded by many artworks); supporters buy it at auction or give directly with a quick donation; the payment is held and released to the mission in tranches, each signed off by an administrator.
@@ -321,3 +352,8 @@ The original HTML viewers are under [html/](html/). Related build projects and
 the squad working agreement are listed in
 [docs/architecture/related-projects.md](docs/architecture/related-projects.md)
 and [docs/architecture/build-squad.md](docs/architecture/build-squad.md).
+
+A lean, self-funding startup path to launch this platform (Campaign Drops,
+funding engine, lean EU stack, work packages and a 90-day plan) is in
+[docs/startup/README.md](docs/startup/README.md), with a visual one-pager at
+[html/startup_work_package_v1.html](html/startup_work_package_v1.html).

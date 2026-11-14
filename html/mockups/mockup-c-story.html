@@ -1,0 +1,50 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mockup C - Story Scroll</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#FF0081;--blue:#1A66DE;--yellow:#FFD400;--bg:#FFFDF7;--text:#232323}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font:400 19px/1.55 Inter,system-ui,sans-serif}
+a{color:inherit}
+.index{position:fixed;left:0;top:0;bottom:0;width:220px;border-right:3px solid var(--text);padding:28px 22px;display:flex;flex-direction:column;gap:6px;background:var(--bg);z-index:5}
+.index .logo{font-weight:900;font-size:22px;line-height:1.05;margin-bottom:28px}.index .logo span{color:var(--pink)}
+.index a{text-decoration:none;font-weight:700;font-size:15px;display:flex;gap:10px;align-items:center;padding:6px 0}
+.index a b{display:inline-grid;place-items:center;width:28px;height:28px;border:3px solid var(--text);font-size:13px}
+.index a.on b{background:var(--pink);color:#fff;border-color:var(--pink)}
+.index .give{margin-top:auto;background:var(--yellow);border:3px solid var(--text);box-shadow:5px 5px 0 var(--text);padding:12px;text-align:center;font-weight:900;text-decoration:none}
+main{margin-left:220px}
+.ch{min-height:92vh;padding:72px 72px;border-bottom:3px solid var(--text);display:grid;align-content:center}
+.num{font-size:15px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+h1{font-size:120px;line-height:.9;margin:16px 0;font-weight:900;letter-spacing:-.03em}
+h2{font-size:72px;line-height:.95;margin:12px 0 24px;font-weight:900;letter-spacing:-.02em}
+.c1{background:var(--text);color:var(--bg)}.c1 h1 span{color:var(--yellow)}
+.box{border:3px solid var(--text);box-shadow:8px 8px 0 var(--text);background:#fff;padding:22px}
+.missions{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.missions .box h3{font-size:28px;margin:4px 0}.bar{height:16px;border:3px solid var(--text);margin:12px 0 6px}.bar i{display:block;height:100%;background:var(--blue)}
+.c3{background:var(--yellow)}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.strip .img{aspect-ratio:3/4;border:3px solid var(--text)}.strip h3{margin:10px 0 0;font-size:22px}.strip p{margin:0;font-size:15px}
+.c4{background:var(--pink);color:#fff}.c4 blockquote{font-size:48px;line-height:1.15;font-weight:900;margin:0;max-width:980px}.c4 cite{display:block;font-size:17px;font-weight:400;font-style:normal;margin-top:20px}
+.ways{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}.ways .box b{font-size:24px;display:block}
+.cta{display:inline-block;margin-top:28px;background:var(--blue);color:#fff;border:3px solid var(--text);box-shadow:6px 6px 0 var(--text);padding:16px 28px;font-weight:900;text-decoration:none}
+.note{position:fixed;bottom:12px;right:12px;background:var(--text);color:#fff;font-size:12px;padding:6px 10px;border-radius:6px}.note a{color:var(--yellow)}
+@media(max-width:900px){.index{position:sticky;width:auto;flex-direction:row;overflow:auto;bottom:auto;border-right:0;border-bottom:3px solid var(--text);padding:10px}.index .logo,.index .give{display:none}main{margin-left:0}.missions,.strip,.ways{grid-template-columns:1fr}h1{font-size:60px}h2{font-size:44px}.ch{padding:40px 22px}}
+</style></head><body>
+<nav class="index"><div class="logo">Expression<br><span>is</span><br>Devotion</div>
+<a class="on" href="#c1"><b>1</b>The drop</a><a href="#c2"><b>2</b>The missions</a><a href="#c3"><b>3</b>The art</a><a href="#c4"><b>4</b>The fruit</a><a href="#c5"><b>5</b>Join in</a>
+<a class="give" href="#c5">Give now</a></nav>
+<main>
+<section class="ch c1" id="c1"><div class="num">Chapter 1 · Advent Drop 2026 · 5 days left</div><h1>Light in <span>darkness.</span></h1>
+<p style="max-width:720px">Eighteen artists gave their work as worship. Three missions are waiting for light, water and the Word. Scroll the story, then choose your part in it.</p></section>
+<section class="ch" id="c2"><div class="num">Chapter 2 · The missions</div><h2>Three places. Three milestones.</h2>
+<div class="missions"><div class="box"><div class="num">Kenya</div><h3>Clinic Light</h3><p>Solar power for a rural clinic</p><div class="bar"><i style="width:62%"></i></div><small>€4,960 of 8,000 · milestone 1 of 3</small></div><div class="box"><div class="num">Kenya</div><h3>Water for Ngong</h3><p>Borehole for 300 families</p><div class="bar"><i style="width:41%"></i></div><small>€2,460 of 6,000 · milestone 1 of 3</small></div><div class="box"><div class="num">Peru</div><h3>Bible Translation</h3><p>Scripture in Quechua for 2 villages</p><div class="bar"><i style="width:78%"></i></div><small>€3,900 of 5,000 · milestone 1 of 3</small></div></div></section>
+<section class="ch c3" id="c3"><div class="num">Chapter 3 · The art</div><h2>Offered, not sold.</h2>
+<div class="strip"><div><div class="img" style="background:conic-gradient(from 200deg at 30% 60%,#FF0081,#FFD400,#1A66DE,#FF0081)"></div><h3>Dawn over Kibera</h3><p>Ruth M. · for Clinic Light · bid €420</p></div><div><div class="img" style="background:radial-gradient(circle at 70% 30%,#FFD400 0 18%,transparent 19%),linear-gradient(160deg,#1A66DE,#232323)"></div><h3>Still Waters</h3><p>Daniel K. · for Water for Ngong · bid €260</p></div><div><div class="img" style="background:repeating-linear-gradient(45deg,#FF0081 0 18px,#FFFDF7 18px 36px)"></div><h3>Every Tongue</h3><p>Ana P. · for Bible Translation · bid €180</p></div></div>
+<a class="cta" href="#">See all 18 works</a></section>
+<section class="ch c4" id="c4"><div class="num">Chapter 4 · The fruit</div><blockquote>"The clinic had light for the first night birth. Thank you for every brushstroke."</blockquote><cite>Testimony · Clinic Light, Kenya · milestone 1 released, evidence verified by two approvers</cite></section>
+<section class="ch" id="c5"><div class="num">Chapter 5 · Join in</div><h2>Your part in the story.</h2>
+<div class="ways"><div class="box"><b>Bid</b>Win a piece, fund a mission.</div><div class="box"><b>Print</b>Take the story home.</div><div class="box"><b>Fund a milestone</b>Direct, from €5.</div><div class="box"><b>Devotion Circle</b>Monthly, from €5.</div></div>
+<a class="cta" href="#">Give now</a></section>
+</main>
+<div class="note">Mockup C · Story Scroll · <a href="index.html">all mockups</a></div>
+<script>const ls=[...document.querySelectorAll('.index a[href^="#c"]')];const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){ls.forEach(l=>l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id))}}),{threshold:.5});document.querySelectorAll('.ch').forEach(s=>io.observe(s));</script>
+</body></html>

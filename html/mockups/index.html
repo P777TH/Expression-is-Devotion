@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Expression is Devotion - Look and feel mockups</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--pink:#FF0081;--blue:#1A66DE;--yellow:#FFD400;--bg:#FFFDF7;--alt:#E5E5E5;--text:#232323}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:400 18px/1.5 Inter,system-ui,sans-serif}
+main{max-width:1180px;margin:0 auto;padding:48px 24px 80px}h1{font-size:56px;margin:0 0 8px;font-weight:900}
+.k{display:inline-block;background:var(--yellow);padding:4px 10px;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin:32px 0}
+.card{display:block;text-decoration:none;color:inherit;border:2px solid var(--text);border-radius:16px;overflow:hidden;background:#fff;transition:transform .15s}.card:hover{transform:translateY(-4px)}
+.thumb{height:180px}.card div.p{padding:18px 20px}.card h2{margin:0;font-size:24px}.card p{margin:6px 0 0;font-size:16px}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:16px}th,td{padding:10px 12px;border-bottom:1px solid var(--alt);text-align:left;vertical-align:top}th{background:var(--text);color:#fff}
+@media(max-width:800px){.cards{grid-template-columns:1fr}}
+</style></head><body><main>
+<span class="k">Website look and feel · choose one</span><h1>Three directions</h1>
+<p>Same content in all three (the Advent Drop, three missions, six artworks, one testimony, four ways to give) so you only compare the feel and the navigation. All use the confirmed palette and Inter. Content is sample text.</p>
+<div class="cards">
+<a class="card" href="mockup-a-flat.html"><div class="thumb" style="background:linear-gradient(90deg,#FFD400 0 55%,#FF0081 55% 70%,#1A66DE 70%)"></div><div class="p"><h2>A · Flat Gallery Wall</h2><p>Clean, bold colour blocks, classic top navigation. Feels like a modern gallery and shop.</p></div></a>
+<a class="card" href="mockup-b-glass.html"><div class="thumb" style="background:radial-gradient(circle at 25% 30%,#FF0081aa,transparent 55%),radial-gradient(circle at 75% 60%,#1A66DEaa,transparent 55%),radial-gradient(circle at 50% 100%,#FFD400cc,transparent 60%),#f6efe6"></div><div class="p"><h2>B · Stained Glass</h2><p>Frosted glass over moving coloured light, app-like floating dock. Feels warm, spiritual, modern.</p></div></a>
+<a class="card" href="mockup-c-story.html"><div class="thumb" style="background:repeating-linear-gradient(0deg,#232323 0 6px,#FFFDF7 6px 36px),#FFFDF7;border-bottom:3px solid #232323"></div><div class="p"><h2>C · Story Scroll</h2><p>Bold editorial zine, numbered chapters with a side index. Feels like a testimony you walk through.</p></div></a>
+</div>
+<table>
+<tr><th></th><th>A · Flat Gallery Wall</th><th>B · Stained Glass</th><th>C · Story Scroll</th></tr>
+<tr><td><b>Navigation</b></td><td>Sticky top bar with pill tabs, Give button right</td><td>Floating bottom dock (thumb-friendly on phones)</td><td>Fixed chapter index left, becomes a top strip on phones</td></tr>
+<tr><td><b>Best at</b></td><td>Browsing and bidding on many artworks</td><td>Emotion and brand moment, mobile app feel</td><td>Storytelling and conversion in one guided path</td></tr>
+<tr><td><b>Risk</b></td><td>Can feel like a normal shop</td><td>Glass needs care for contrast and older phones</td><td>Long pages; gallery browsing needs a second page</td></tr>
+<tr><td><b>Accessibility</b></td><td>Easiest to meet WCAG AA</td><td>Needs solid fallbacks behind text</td><td>Strong contrast, good with reduced motion</td></tr>
+<tr><td><b>Build effort (Stage 0)</b></td><td>Low</td><td>Medium</td><td>Low to medium</td></tr>
+<tr><td><b>Fits the Figma wireframes</b></td><td>Closest</td><td>New direction</td><td>New direction, maps well to the "Support (how it works)" page</td></tr>
+</table>
+<p><b>Suggestion:</b> combine them. Use <b>C</b> for the home and drop story, <b>A</b> for the gallery, missions and portals, and borrow <b>B</b>'s glass only for the bid and give panels.</p>
+</main></body></html>
