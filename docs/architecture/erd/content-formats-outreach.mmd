@@ -1,0 +1,128 @@
+erDiagram
+  USER ||--o{ TESTIMONY : writes
+  MISSION ||--o{ TESTIMONY : features_in
+  TESTIMONY ||--o{ MEDIA : includes
+  TESTIMONY ||--o{ SOCIAL_POST : shared_as
+  POST_FORMAT ||--|{ POST_FORMAT_COMPONENT : made_of
+  POST_FORMAT ||--o{ SOCIAL_POST : frames
+  POST_FORMAT ||--o{ FORMAT_RULE : selected_by
+  POST_FORMAT ||--o{ PLATFORM_LIMIT : constrained_by
+  POST_FORMAT_COMPONENT ||--o{ POST_SLOT_MEDIA : filled_by
+  SOCIAL_POST ||--|{ POST_SLOT_MEDIA : composed_of
+  MEDIA ||--o{ POST_SLOT_MEDIA : placed_in
+  SOCIAL_POST ||--o{ POST_RENDER : rendered_as
+  USER ||--o{ POST_ACTION : triggers
+  SOCIAL_POST ||--o{ POST_ACTION : actioned_by
+  SOCIAL_POST ||--o{ POST_ATTEMPT : posted_via
+  USER ||--o{ SUBSCRIBER : supplies
+  NEWSLETTER ||--o{ DELIVERY : sent_as
+  SUBSCRIBER ||--o{ DELIVERY : receives
+  ARTIST_PROFILE ||--o{ CONTACT_REQUEST : receives
+  TESTIMONY {
+    uuid id PK
+    uuid author_id FK
+    uuid mission_id FK
+    string title
+    text body
+    string status
+  }
+  MEDIA {
+    uuid id PK
+    uuid testimony_id FK
+    string kind
+    string file_url
+    int duration_seconds
+  }
+  POST_FORMAT {
+    uuid id PK
+    string name
+    string frame_template
+    string aspect_ratio
+    int max_duration
+    string file_types
+    bool is_active
+  }
+  POST_FORMAT_COMPONENT {
+    uuid id PK
+    uuid post_format_id FK
+    string media_type
+    int position
+    bool required
+  }
+  POST_SLOT_MEDIA {
+    uuid id PK
+    uuid social_post_id FK
+    uuid post_format_component_id FK
+    uuid media_id FK
+  }
+  SOCIAL_POST {
+    uuid id PK
+    uuid testimony_id FK
+    uuid post_format_id FK
+    string platform
+    string external_ref
+    string status
+    int retry_count
+    text error_message
+  }
+  POST_RENDER {
+    uuid id PK
+    uuid social_post_id FK
+    string rendered_file_reference
+    timestamp rendered_at
+  }
+  POST_ACTION {
+    uuid id PK
+    uuid social_post_id FK
+    uuid actioned_by FK
+    string action
+    timestamp actioned_at
+  }
+  POST_ATTEMPT {
+    uuid id PK
+    uuid social_post_id FK
+    uuid render_id FK
+    string outcome
+    timestamp attempted_at
+  }
+  FORMAT_RULE {
+    uuid id PK
+    uuid post_format_id FK
+    text condition
+    int priority
+    bool is_active
+  }
+  PLATFORM_LIMIT {
+    uuid id PK
+    uuid post_format_id FK
+    string platform
+    int max_duration
+    string aspect_ratio
+    int max_file_mb
+  }
+  SUBSCRIBER {
+    uuid id PK
+    string email UK
+    bool subscribed
+    timestamp confirmed_at
+    uuid supplied_by FK
+  }
+  NEWSLETTER {
+    uuid id PK
+    string subject
+    text body
+    timestamp sent_at
+  }
+  DELIVERY {
+    uuid id PK
+    uuid newsletter_id FK
+    uuid subscriber_id FK
+    string status
+  }
+  CONTACT_REQUEST {
+    uuid id PK
+    uuid artist_id FK
+    uuid artwork_id FK
+    string sender_email
+    text message
+  }

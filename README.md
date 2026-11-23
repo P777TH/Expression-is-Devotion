@@ -1,6 +1,42 @@
-# Expression is Devotion — Business Requirements Document
+---
+title: Expression is Devotion Business Requirements
+description: Business requirements, product scope, governance, and open decisions for the Expression is Devotion platform
+---
+
+## Expression is Devotion — Business Requirements Document
 
 Oct 14, 2026 · @Teresa
+
+> **Start here.** This README is the full Business Requirements Document (BRD).
+> You do not need to read it top to bottom. Use the guide below.
+
+### Reading guide
+
+| Time you have | Read this | You will know |
+| --- | --- | --- |
+| 5 minutes | [The Devotion Engine one-pager](html/startup_work_package_v1.html) | The startup idea at a glance: drops, funding, stages, 90 days |
+| 10 minutes | [Look and feel mockups](html/mockups/index.html) | Three design directions for the website to choose from |
+| 20 minutes | [Startup package overview](docs/startup/README.md), then [the 12 pilot decisions](docs/startup/05-decisions-and-risks.md) | What you need to decide first, with a suggested answer for each |
+| 1 hour | This BRD, sections 1 to 7 | The full product: roles, features, governance, payments |
+| Deep dive | [Architecture](docs/architecture/README.md) and the ERD viewers in [html/](html/) | Data model and technical design for builders |
+
+### Your next three actions
+
+1. Say yes, no or change to decisions **D1 to D12** in [05-decisions-and-risks.md](docs/startup/05-decisions-and-risks.md).
+2. Pick a look and feel (A, B or C) in the [mockups](html/mockups/index.html).
+3. Name the first two or three pilot missions and the board of three.
+
+### Repository map
+
+| Folder | What is inside | For whom |
+| --- | --- | --- |
+| `README.md` | This BRD: requirements, governance, open items | Owner, board |
+| `docs/startup/` | Startup work package: concept, funding engine, lean stack, work packages, decisions | Owner, board, team |
+| `html/` | One-pager, website mockups, interactive ERD viewers | Everyone (open in a browser) |
+| `docs/architecture/` | Architecture views, options, ERD sources, roadmap | Builders |
+| `projects/` | Linked build-squad framework (Git submodule) | Builders |
+
+---
 
 ## 1. Executive summary
 
@@ -306,3 +342,18 @@ A tech stack has been suggested (Next.js, EU-hosted Vercel, Supabase with EU dat
 | 50 | Design and UX | Languages for launch (Dutch, English, others?) and accessibility level | Locale and NFR targets | Medium |
 | 51 | Design and UX | Gallery page: sorting and filters (by mission, artist, open or sold) | New page | Medium |
 | 52 | Design and UX | Designs for gallery, mission, artist and testimony pages, the portals, forms and admin | Not yet in Figma | Medium |
+
+## 13. Architecture and project structure
+
+The current data models and stack-neutral architecture proposal are in
+[docs/architecture/README.md](docs/architecture/README.md). Standalone Mermaid
+sources for the four current ERDs are in [docs/architecture/erd/](docs/architecture/erd/).
+The original HTML viewers are under [html/](html/). Related build projects and
+the squad working agreement are listed in
+[docs/architecture/related-projects.md](docs/architecture/related-projects.md)
+and [docs/architecture/build-squad.md](docs/architecture/build-squad.md).
+
+A lean, self-funding startup path to launch this platform (Campaign Drops,
+funding engine, lean EU stack, work packages and a 90-day plan) is in
+[docs/startup/README.md](docs/startup/README.md), with a visual one-pager at
+[html/startup_work_package_v1.html](html/startup_work_package_v1.html).

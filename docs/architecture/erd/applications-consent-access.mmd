@@ -1,0 +1,100 @@
+erDiagram
+  USER ||--o{ APPLICATION : submits
+  ORGANISATION ||--o{ APPLICATION : concerns
+  APPLICATION ||--o{ DOCUMENT : attaches
+  ORGANISATION ||--o{ DOCUMENT : holds
+  USER ||--o{ DOCUMENT : uploads
+  USER ||--o{ CONSENT : gives
+  USER ||--o{ ERASURE_REQUEST : requests
+  RETENTION_RULE ||--o{ DOCUMENT : governs
+  RETENTION_RULE ||--o{ APPLICATION : governs
+  RETENTION_RULE ||--o{ CONSENT : governs
+  APPLICATION ||--o{ APPROVAL : needs
+  USER ||--o{ APPROVAL : decides
+  USER ||--o{ ADMIN_PERMISSION : holds
+  USER ||--o{ ADMIN_PERMISSION : granted
+  USER ||--o{ AUDIT_LOG : acts_in
+  ERASURE_REQUEST ||--o{ AUDIT_LOG : logged_in
+  USER {
+    uuid id PK
+    string email UK
+    string role
+    bool mfa_enabled
+  }
+  ORGANISATION {
+    uuid id PK
+    string legal_name
+  }
+  APPLICATION {
+    uuid id PK
+    uuid user_id FK
+    uuid organisation_id FK
+    string form_type "missionary_nl, missionary_intl, artist, supporter"
+    string form_version
+    string locale
+    json non_sensitive_answers
+    string status
+    timestamp submitted_at
+  }
+  DOCUMENT {
+    uuid id PK
+    string owner_type
+    uuid owner_id
+    string doc_type "jaarrekening, safeguarding_policy, registration_certificate, financial_statement, photo_sample"
+    string storage_key "private bucket, signed links only"
+    string sha256
+    string classification "public, confidential, restricted"
+    bool malware_scanned
+    uuid uploaded_by FK
+    timestamp uploaded_at
+    uuid retention_rule_id FK
+  }
+  CONSENT {
+    uuid id PK
+    uuid user_id FK
+    uuid retention_rule_id FK
+    string consent_type "terms_privacy, marketing, media_photo_video, progress_reports, age_consent, safeguarding_training, image_rights_copyright"
+    string policy_version
+    timestamp given_at
+    timestamp withdrawn_at
+    string evidence_ref
+  }
+  RETENTION_RULE {
+    uuid id PK
+    string data_category "artist, supporter, missionary, financial, documents"
+    int retention_months
+    string legal_basis
+    string review_owner
+  }
+  ERASURE_REQUEST {
+    uuid id PK
+    uuid user_id FK
+    timestamp requested_at
+    string status
+    string exception_reason "e.g. financial record retention"
+    timestamp completed_at
+  }
+  APPROVAL {
+    uuid id PK
+    uuid admin_id FK
+    string target_type
+    uuid target_id
+    string decision
+    int approval_order
+    timestamp decided_at
+  }
+  ADMIN_PERMISSION {
+    uuid id PK
+    uuid admin_id FK
+    string permission "approve_missionary, approve_artist, approve_auction, approve_payment"
+    uuid granted_by FK
+  }
+  AUDIT_LOG {
+    uuid id PK
+    uuid actor_id FK
+    string action "includes reads of restricted documents"
+    string target_type
+    uuid target_id
+    string ip_hash
+    timestamp created_at
+  }
