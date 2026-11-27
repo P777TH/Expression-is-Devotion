@@ -473,6 +473,7 @@ details.q summary::after{color:var(--pink)}
 
 <dialog id="dlg" aria-labelledby="dlg-title"><div id="dlg-body"></div></dialog>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (function(){
 'use strict';
@@ -1079,20 +1080,21 @@ V.signin=()=>`${pageHero('Login','Log in','One login for supporters, artists, mi
     <div class="row-btns"><button class="btn" type="submit">Log in</button><button class="link" type="button" data-act="toast" data-msg="Reset link sent if the address is known">Forgot password?</button></div>
     <p>New here? <a href="#enrol">Enrol</a></p>
   </form>
-  <aside class="side-note stack"><b>Mockup: continue as</b><p class="muted">Pick a role to walk through its portal.</p>
+  ${LIVE.sbc?'<aside class="side-note stack"><b>Test version</b><p class="muted">Log in with the test account you were given. Administrators get a second step with an authenticator app.</p></aside>':`<aside class="side-note stack"><b>Mockup: continue as</b><p class="muted">Pick a role to walk through its portal.</p>
     <div class="stack" style="gap:10px">${[['supporter','Supporter'],['artist','Artist'],['missionary','Missionary'],['admin','Administrator']].map(([r,l])=>`<button class="btn light block" type="button" data-act="as" data-role="${r}">${l}</button>`).join('')}</div>
-  </aside>
+  </aside>`}
 </div></section>`;
 
 V['signin-code']=()=>`${pageHero('Login · step 2','Enter your code','Administrators log in with a second step. Enter the 6-digit code from your authenticator app.')}
 <section class="wrap sec" style="padding-top:24px;max-width:520px"><form class="box pad stack" data-form="code" novalidate>
+  ${S.mfa&&S.mfa.qr?`<p><b>First time?</b> Scan this QR code with an authenticator app (for example Google Authenticator, Microsoft Authenticator or 1Password), then enter the 6-digit code it shows.</p><img src="${S.mfa.qr}" alt="QR code for your authenticator app" style="width:200px;height:200px;background:#fff;border:3px solid var(--text)"><p class="hint">Can't scan? Enter this key in the app: <code style="word-break:break-all">${esc(S.mfa.secret||'')}</code></p>`:''}
   <label class="f" for="code">6-digit code<input id="code" type="text" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="123456"></label>
   <p class="err" id="code-err" hidden></p>
   <button class="btn" type="submit" style="align-self:flex-start">Verify and continue</button>
 </form></section>`;
 
 /* ---------- Portals ---------- */
-V['portal-supporter']=()=>`${pageHero('My portal · Supporter','Welcome back'+(S.name?', '+esc(S.name):''),'')}
+V._supMock=()=>`${pageHero('My portal · Supporter','Welcome back'+(S.name?', '+esc(S.name):''),'')}
 <section class="wrap sec" style="padding-top:20px"><div class="stack" style="gap:20px">${needRole('supporter','supporter portal')}
 ${tabs('sup',[
  ['overview','Overview',`<div class="kpis"><div class="kpi"><b>2</b><span>Bids leading</span></div><div class="kpi"><b>1</b><span>Outbid</span></div><div class="kpi"><b>1</b><span>Won · to pay</span></div><div class="kpi"><b>€75</b><span>Given this year</span></div></div>
@@ -1238,7 +1240,7 @@ function followersDialog(k){
   </form>`);
   $('#dlg').classList.add('wide');
 }
-V['portal-missionary']=()=>{const m=MISSIONS.clinic;return `${pageHero('My portal · Mission',m.name,'')}
+V['portal-missionary']=()=>{const m=(LIVE.myMission&&MISSIONS[LIVE.myMission])||MISSIONS.clinic;return `${pageHero('My portal · Mission',m.name,'')}
 <section class="wrap sec" style="padding-top:20px"><div class="stack" style="gap:20px">${needRole('missionary','missionary portal')}
 ${tabs('mis',[
  ['overview','Overview',`<div class="kpis"><div class="kpi"><b>${eur(m.raised)}</b><span>Raised of ${eur(m.goal)}</span></div><div class="kpi"><b>1 of 3</b><span>Tranches released</span></div><button class="kpi" type="button" data-act="followers" aria-label="Newsletter followers: open the list"><b>${confirmed().length}</b><span>Newsletter followers · see who →</span></button><div class="kpi"><b>[date]</b><span>Next testimony due</span></div></div>
@@ -1476,7 +1478,7 @@ const Q={
 const qList=(k,label)=>`<div class="stack" style="gap:12px">${Q[k].map(i=>`<div class="box pad" style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;box-shadow:4px 4px 0 var(--text)" data-q="${i.id}"><div><button class="link" type="button" data-act="open-q" data-q="${i.id}" style="min-height:0;text-align:left"><b>${i.t}</b></button><br><span class="muted">${i.s}</span></div><div class="row-btns" style="gap:10px"><span data-qs="${i.id}">${status('wait','Pending')}</span><button class="btn s light" type="button" data-act="open-q" data-q="${i.id}">Open</button><button class="btn s" type="button" data-act="approve" data-q="${i.id}" data-kind="${k}">Approve</button><button class="btn s light" type="button" data-act="decline" data-q="${i.id}">Decline</button></div></div>`).join('')}</div>`;
 V.admin=()=>`${pageHero('Admin portal','Approvals and oversight','')}
 <section class="wrap sec" style="padding-top:20px"><div class="stack" style="gap:20px">${needRole('admin','admin portal')}
-<div class="banner" style="background:var(--white)"><span class="as-admin"><label for="as-admin">Signed in as</label><select id="as-admin">${ADMINS.map((a,i)=>`<option value="${i}" ${i===(S.adminAs||0)?'selected':''}>${a.n}</option>`).join('')}</select><span>· two-step verified · role: <b>${roleLabel()}</b></span></span><span class="muted">Mockup: switch person to see which tabs they get. Every approval is written to the audit log.</span></div>
+<div class="banner" style="background:var(--white)"><span class="as-admin"><label for="as-admin">Signed in as</label><select id="as-admin" ${LIVE.admin?'disabled':''}>${ADMINS.map((a,i)=>`<option value="${i}" ${i===(S.adminAs||0)?'selected':''}>${a.n}</option>`).join('')}</select><span>· two-step verified · role: <b>${roleLabel()}</b></span></span>${LIVE.admin?'<span class="muted">Every approval is saved to the audit log.</span>':'<span class="muted">Mockup: switch person to see which tabs they get. Every approval is written to the audit log.</span>'}</div>
 ${tabs('adm',admTabs([
  ['dash','Overview',`<div class="kpis">${[[Q.testimony.length,'Testimonies to approve','tst'],[Q.missionary.length,'Missionary applications','miss'],[Q.artist.length,'Artist applications','arts'],[Q.auction.length,'Auctions to approve','auc'],[Q.payment.length,'Payments to release','pay']].filter(([n,l,k])=>canSee(k)).map(([n,l,k])=>`<button class="kpi" type="button" data-tabgo="adm" data-k="${k}" style="text-align:left;cursor:pointer"><b>${n}</b><span>${l}</span></button>`).join('')}</div>
    <div class="box pad stack" style="margin-top:20px"><h2 class="h3">Success measures</h2><div class="two"><label class="f" for="rp-from">Reporting period from<input id="rp-from" type="date"></label><label class="f" for="rp-to">to<input id="rp-to" type="date"></label></div>
@@ -1565,7 +1567,7 @@ function render(count){
   document.title=(name.charAt(0).toUpperCase()+name.slice(1))+' · Expression is Devotion';
   window.scrollTo(0,0); onScroll();
   const h1=$('#app h1'); if(h1){h1.setAttribute('tabindex','-1');h1.focus({preventScroll:true});}
-  after(h);
+  after(h);LIVE.after(h);
 }
 function after(h){
   if(h==='admin') siteToggle();
@@ -1629,7 +1631,7 @@ document.addEventListener('click',async e=>{
     case 'like':case 'like-s':{const key=(act==='like-s'?'s-':'')+t.dataset.id;S.liked[key]=!S.liked[key];t.setAttribute('aria-pressed',String(S.liked[key]));const sp=$('span',t);sp.textContent=+sp.textContent+(S.liked[key]?1:-1);break;}
     case 'contact':dialog(`<form data-form="contact" novalidate><button class="x" type="button" data-close aria-label="Close">×</button><h3 class="h3" id="dlg-title">Request contact</h3><p class="muted">Send ${t.dataset.who} a message about ${t.dataset.about}. They reply to the email address you leave.</p><label class="f" for="c-n">Your name<input id="c-n" type="text" autocomplete="name"></label><label class="f" for="c-e">Your email<input id="c-e" type="email" autocomplete="email"></label><label class="f" for="c-m">Message<textarea id="c-m"></textarea></label><p class="err" id="c-err" hidden></p><div class="row-btns"><button class="btn" type="submit">Send message</button><button class="btn light" type="button" data-close>Cancel</button></div></form>`);break;
     case 'as':S.role=t.dataset.role;toast('Viewing as '+(S.role==='admin'?'administrator':S.role));go(S.role==='admin'?'signin-code':portalFor[S.role]);break;
-    case 'signout':S.role=null;toast('Signed out');go('home');break;
+    case 'signout':if(LIVE.sbc&&LIVE.me){LIVE.signOut();break;}S.role=null;toast('Signed out');go('home');break;
     case 'pay-won':S.ctx={type:'won',id:t.dataset.id};go('checkout');break;
     case 'tprev':case 'tnext':{const tr=$('#track');const n=$$('.slide',tr).length;let i=Math.round(tr.scrollLeft/tr.clientWidth)+(act==='tnext'?1:-1);i=(i+n)%n;tr.scrollTo({left:i*tr.clientWidth,behavior:'smooth'});break;}
     case 'toast':toast(t.dataset.msg);break;
@@ -1648,10 +1650,10 @@ document.addEventListener('click',async e=>{
     case 'g-reset':S.q='';S.filterM='all';S.filterS='all';render();break;
     case 'approve':{const k=qKind(t.dataset.q),it=k&&Q[k].find(x=>x.id===t.dataset.q);
       if(it&&!t.closest('#dlg')&&(restricted(k,it)||(it.upd&&!it.upd.legal))){openItem(t.dataset.q);toast('This one needs a safety check first.');break;}}
-      approve(t);if(t.closest('#dlg'))$('#dlg').close();break;
+      {const nt=$('#dlg[open] #qd-note'),note=nt?nt.value.trim():'',kind=t.dataset.kind||qKind(t.dataset.q);approve(t);LIVE.decide(t.dataset.q,kind,'approved',note);}if(t.closest('#dlg'))$('#dlg').close();break;
     case 'open-q':openItem(t.dataset.q);break;
     case 'restricted':audit('Opened restricted document',t.dataset.n);toast('Opened. This is written to the audit log.');break;
-    case 'decline':{$(`[data-qs="${t.dataset.q}"]`).innerHTML=status('no','Declined');audit('Declined '+({missionary:'mission application',artist:'artist application',auction:'auction',payment:'payment',testimony:'testimony'}[qKind(t.dataset.q)]||''),($(`[data-q="${t.dataset.q}"] b`)||{textContent:''}).textContent);$$(`[data-q="${t.dataset.q}"] .btn`).forEach(b=>b.disabled=true);Object.keys(Q).forEach(k=>Q[k]=Q[k].filter(x=>x.id!==t.dataset.q));if(t.closest('#dlg'))$('#dlg').close();break;}
+    case 'decline':{LIVE.decide(t.dataset.q,qKind(t.dataset.q),'rejected',(($('#dlg[open] #qd-note')||{}).value||'').trim());$(`[data-qs="${t.dataset.q}"]`).innerHTML=status('no','Declined');audit('Declined '+({missionary:'mission application',artist:'artist application',auction:'auction',payment:'payment',testimony:'testimony'}[qKind(t.dataset.q)]||''),($(`[data-q="${t.dataset.q}"] b`)||{textContent:''}).textContent);$$(`[data-q="${t.dataset.q}"] .btn`).forEach(b=>b.disabled=true);Object.keys(Q).forEach(k=>Q[k]=Q[k].filter(x=>x.id!==t.dataset.q));if(t.closest('#dlg'))$('#dlg').close();break;}
   }
 });
 function audit(action,item){const nt=$('#dlg[open] #qd-note');if(nt&&nt.value.trim())item+=' · note: '+esc(nt.value.trim());const d=new Date();LOG.unshift({when:'Today '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0'),who:me().n,role:roleOf(action),action,item});auditRefresh();}
@@ -1756,7 +1758,7 @@ document.addEventListener('change',e=>{
   if(t.id==='al-who'||t.id==='al-role'){S.alWho=$('#al-who').value;S.alRole=$('#al-role').value;auditRefresh();return;}
   if(t.dataset.perm){const a=ADMINS[+t.dataset.ai],k=t.dataset.perm;
     if(!me().p.super){t.checked=!t.checked;toast('Only a super-admin can change permissions.');return;}
-    a.p[k]=t.checked?1:0;
+    a.p[k]=t.checked?1:0;LIVE.setPerm(a,k,t.checked);
     if(k==='super'){PERMS.forEach(([x])=>{if(x!=='super'){const c=$(`[data-perm="${x}"][data-ai="${t.dataset.ai}"]`);c.disabled=t.checked;if(t.checked){c.checked=true;a.p[x]=1;}}});}
     audit('Changed permissions',`${a.n}: ${PERMS.find(x=>x[0]===k)[1]} ${t.checked?'on':'off'}`);toast('Permission changed and logged');}
 });
@@ -1784,11 +1786,11 @@ document.addEventListener('submit',e=>{
     case 'nl':{if(!emailOk(v('nl-email'))){err('nl-err','Enter a valid email address, like you@example.com.');break;}if(!$('#nl-ok').checked){err('nl-err','Tick the box to agree to the newsletter.');break;}LIVE.subscribe(v('nl-email')).then(ok=>{if(ok)go('newsletter-check');});break;}
     case 'pray':{if(!emailOk(v('pray-email'))){toast('Enter your email address to receive prayer points.');break;}toast('We sent a confirmation email first');f.reset();break;}
     case 'intro':toast('Thank you. We will follow up on your introduction.');f.reset();break;
-    case 'supporter':{if(!v('su-n').trim()||!emailOk(v('su-e'))){err('su-err','Fill in your name and a valid email address.');break;}if(!$('#su-t').checked){err('su-err','Agree to the terms to create an account.');break;}S.name=v('su-n').trim();S.role='supporter';toast('Account created');go('portal-supporter');break;}
+    case 'supporter':{if(!v('su-n').trim()||!emailOk(v('su-e'))){err('su-err','Fill in your name and a valid email address.');break;}if(!$('#su-t').checked){err('su-err','Agree to the terms to create an account.');break;}if(LIVE.sbc){LIVE.signUp(v('su-n'),v('su-e'),v('su-p'));break;}S.name=v('su-n').trim();S.role='supporter';toast('Account created');go('portal-supporter');break;}
     case 'artist':{if(!v('ar-n').trim()||!emailOk(v('ar-e'))){err('ar-err','Fill in your name and a valid email address.');break;}if(!$('#ar-ok').checked){err('ar-err','Agree to the terms to send your application.');break;}S.artName=v('ar-n').trim();Q.artist.push({id:'q'+Date.now(),t:S.artName,s:'Artist application · waits for review'});toast('Application sent to the admin queue.');go('application-sent');break;}
     case 'mission':{if(!v('mi-t').trim()||!emailOk(v('mi-e'))){err('mi-err','Fill in at least the mission title and a valid email address.');break;}if(!safeOk('mi')){err('mi-err','Evangelism is not legal where you work: tick both safety checks first.');break;}if(!$('#mi-ok').checked){err('mi-err','Agree to the terms and requirements to send for review.');break;}Q.missionary.push({id:'q'+Date.now(),t:v('mi-t').trim(),s:'Mission application · waits for review'});toast('Application sent to the admin queue.');go('application-sent');break;}
-    case 'signin':{if(!emailOk(v('si-e'))){toast('Enter your email address, or use “Continue as” on the right.');break;}S.role='supporter';go('portal-supporter');break;}
-    case 'code':{if(!/^\d{6}$/.test(v('code'))){err('code-err','Enter the 6 digits from your authenticator app.');break;}S.role='admin';go('admin');break;}
+    case 'signin':{if(LIVE.sbc){if(!emailOk(v('si-e'))||!v('si-p')){toast('Enter your email address and password.');break;}LIVE.signIn(v('si-e'),v('si-p'));break;}if(!emailOk(v('si-e'))){toast('Enter your email address, or use “Continue as” on the right.');break;}S.role='supporter';go('portal-supporter');break;}
+    case 'code':{if(!/^\d{6}$/.test(v('code'))){err('code-err','Enter the 6 digits from your authenticator app.');break;}if(LIVE.sbc){LIVE.verifyCode(v('code'));break;}S.role='admin';go('admin');break;}
     case 'add-art':{if(!v('na-t').trim()){err('na-err','Give the artwork a title.');break;}err('na-err');$('#aw-rows').insertAdjacentHTML('beforeend',`<tr><td>${v('na-t').replace(/[<>&]/g,'')}</td><td>${mName(v('na-m'))}</td><td>${status('wait','Awaiting approval')}</td><td class="num">—</td><td></td></tr>`);f.reset();toast('Sent for approval');$('.tab[data-tab="art"][data-k="works"]').click();break;}
     case 'testimony':{const d=tData();
       const soc=['ig-post','ig-reel','fb-post','tiktok'].includes(d.fmt);
@@ -1844,7 +1846,7 @@ document.addEventListener('submit',e=>{
 const SB_URL='https://zoyjrpkdpafxcckggckp.supabase.co';
 const SB_KEY='sb_publishable_DSCnFTzjHxz0JwOqbKS5dQ_egP_Y6W0';
 async function sb(path,opt={}){
-  const r=await fetch(SB_URL+'/rest/v1/'+path,{...opt,headers:{apikey:SB_KEY,'Content-Type':'application/json',...(opt.headers||{})}});
+  const r=await fetch(SB_URL+'/rest/v1/'+path,{...opt,headers:{apikey:SB_KEY,'Content-Type':'application/json',...(LIVE.token?{Authorization:'Bearer '+LIVE.token}:{}),...(opt.headers||{})}});
   if(!r.ok){const e=new Error('Supabase HTTP '+r.status);e.status=r.status;throw e;}
   const t=await r.text(); return t?JSON.parse(t):null;
 }
@@ -1868,6 +1870,7 @@ const LIVE={on:false,
         bg:bgs[i%bgs.length],photo:null,legal:!!r.evangelism_legal,where:'',follow:'',web:'',soc:'',email:'',db:true};
       HELPED[r.id]=[];
     });
+    (await sb('mission_total?select=mission_id,raised').catch(()=>[])).forEach(t=>{if(MISSIONS[t.mission_id])MISSIONS[t.mission_id].raised=+t.raised;});
     artists.forEach(r=>{ARTISTS[r.id]={id:r.id,name:r.display_name,ig:r.instagram_handle||'',statement:r.statement||''};});
     arts.forEach(r=>{
       const au=r.auction; if(!au||!MISSIONS[r.mission_id]||!ARTISTS[r.artist_id]) return;
@@ -1907,7 +1910,177 @@ const LIVE={on:false,
   }
 };
 
-LIVE.load().catch(e=>{console.error(e);setTimeout(()=>toast('Live data could not load. Showing sample content.'),400);}).finally(()=>render());
+/* ---------------- Login, portals and admin queue (Supabase Auth) ----------------
+   Uses the official supabase-js client (one script from jsDelivr) for login sessions and two-step login (TOTP).
+   All data access still goes through row-level security; admin decisions run in database functions
+   that check permissions, two-step login and separation of duties again on the server. */
+LIVE.sbc=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SB_URL,SB_KEY):null;
+LIVE.token=null; LIVE.me=null;
+const ROLE_UI={supporter:'supporter',artist:'artist',missionary:'missionary',admin:'admin',super_admin:'admin'};
+const PERM_UI={approve_missionary:'miss',approve_artist:'arts',approve_auction:'auc',approve_payment:'pay',approve_testimony:'web',view_site_rules:'rules',view_audit_log:'log',super_admin:'super'};
+const PERM_DB=Object.fromEntries(Object.entries(PERM_UI).map(([a,b])=>[b,a]));
+const KIND_TARGET={testimony:'TESTIMONY',missionary:'APPLICATION',artist:'APPLICATION',auction:'AUCTION',payment:'TRANCHE'};
+const nameOf=email=>(email||'').split('@')[0];
+const dmy=s=>{if(!s)return '—';const d=new Date(s);return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear();};
+const dmyhm=s=>{const d=new Date(s);return dmy(s)+' '+String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');};
+const PAY_ST={pending:['wait','To pay'],paid:['done','Paid'],held:['done','Paid · held for tranches'],partially_released:['done','Paid · partly released'],released:['done','Paid · released'],refunded:['no','Refunded'],failed:['no','Failed']};
+const sbErr=e=>(e&&(e.message||e.error_description))||'Something went wrong. Please try again.';
+async function rpc(fn,args){
+  const r=await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json',Authorization:'Bearer '+LIVE.token},body:JSON.stringify(args)});
+  const t=await r.text(); let j=null; try{j=t?JSON.parse(t):null;}catch(_){}
+  if(!r.ok) throw new Error((j&&j.message)||('Error '+r.status));
+  return j;
+}
+Object.assign(LIVE,{
+  async session(){const {data}=await LIVE.sbc.auth.getSession();LIVE.token=data.session?data.session.access_token:null;return data.session;},
+  async loadMe(uid){const rows=await sb(`users?select=id,email,role,status&auth_user_id=eq.${uid}`);LIVE.me=rows&&rows[0]||null;return LIVE.me;},
+  async signIn(email,pw){
+    if(!LIVE.sbc){toast('Login is not available right now. Please try again later.');return;}
+    const {data,error}=await LIVE.sbc.auth.signInWithPassword({email:email.trim(),password:pw});
+    if(error){toast(error.message==='Invalid login credentials'?'Email or password is not correct.':sbErr(error));return;}
+    LIVE.token=data.session.access_token;
+    const me=await LIVE.loadMe(data.user.id);
+    if(!me){toast('Your account is not set up yet. Please contact us.');await LIVE.sbc.auth.signOut();LIVE.token=null;return;}
+    if(ROLE_UI[me.role]==='admin') return LIVE.startMfa();
+    await LIVE.afterLogin(); go(portalFor[S.role]);
+  },
+  async startMfa(){
+    const {data,error}=await LIVE.sbc.auth.mfa.listFactors();
+    if(error){toast(sbErr(error));return;}
+    const ready=(data.totp||[]).find(f=>f.status==='verified');
+    if(ready){S.mfa={factorId:ready.id};go('signin-code');return;}
+    // Clean up half-finished set-ups, then start a new one
+    for(const f of (data.all||[]).filter(f=>f.factor_type==='totp'&&f.status!=='verified')) await LIVE.sbc.auth.mfa.unenroll({factorId:f.id});
+    const en=await LIVE.sbc.auth.mfa.enroll({factorType:'totp',friendlyName:'Expression is Devotion'});
+    if(en.error){toast(sbErr(en.error));return;}
+    const qr=en.data.totp.qr_code||'';
+    S.mfa={factorId:en.data.id,qr:qr.startsWith('data:')?qr:'data:image/svg+xml;utf-8,'+encodeURIComponent(qr),secret:en.data.totp.secret};
+    go('signin-code');
+  },
+  async verifyCode(code){
+    if(!LIVE.sbc||!S.mfa){go('signin');return;}
+    const {error}=await LIVE.sbc.auth.mfa.challengeAndVerify({factorId:S.mfa.factorId,code});
+    if(error){err('code-err','That code is not correct or has expired. Try the newest code.');return;}
+    S.mfa=null; await LIVE.session(); await LIVE.afterLogin(); go('admin');
+  },
+  async signUp(name,email,pw){
+    if(!LIVE.sbc){toast('Sign-up is not available right now.');return;}
+    if((pw||'').length<8){err('su-err','Choose a password of at least 8 characters.');return;}
+    const {data,error}=await LIVE.sbc.auth.signUp({email:email.trim(),password:pw,options:{data:{role:'supporter',display_name:name.trim()},emailRedirectTo:location.origin+location.pathname}});
+    if(error){err('su-err',sbErr(error));return;}
+    if(data.session){LIVE.token=data.session.access_token;await LIVE.loadMe(data.user.id);await LIVE.afterLogin();toast('Account created');go('portal-supporter');}
+    else{toast('Account created. Check your email and click the link to confirm, then log in.');go('signin');}
+  },
+  async signOut(){try{if(LIVE.sbc)await LIVE.sbc.auth.signOut();}catch(_){}location.hash='home';location.reload();},
+  async restore(){
+    if(!LIVE.sbc) return;
+    const s=await LIVE.session(); if(!s) return;
+    const me=await LIVE.loadMe(s.user.id); if(!me) return;
+    if(ROLE_UI[me.role]==='admin'){
+      const {data}=await LIVE.sbc.auth.mfa.getAuthenticatorAssuranceLevel();
+      if(!data||data.currentLevel!=='aal2'){LIVE.me=null;return;}  // admins must pass the code step again
+    }
+    await LIVE.afterLogin();
+  },
+  async afterLogin(){
+    const me=LIVE.me; S.role=ROLE_UI[me.role];
+    try{
+      if(me.role==='supporter'){
+        const [prof,pays]=await Promise.all([
+          sb('supporter_profile?select=id,display_name_pseudonym'),
+          sb('payment?select=id,kind,item_amount,shipping_amount,status,created_at,mission_id,auction_id,tranche(sequence,status)&order=created_at.desc')]);
+        LIVE.sup={profile:prof[0]||{},payments:pays||[]};
+        S.name=(prof[0]&&prof[0].display_name_pseudonym)||nameOf(me.email);
+      } else if(me.role==='artist'){
+        const prof=await sb('artist_profile?select=id,display_name');
+        const p=prof[0]||{};
+        const works=p.id?await sb(`artwork?select=id,title,mission_id,status,auction(status,start_price,ends_at,bid(amount))&artist_id=eq.${p.id}&order=created_at`):[];
+        LIVE.art={profile:p,works:works||[]}; S.artName=p.display_name||nameOf(me.email);
+      } else if(me.role==='missionary'){
+        const links=await sb(`mission_missionary?select=mission_id,role&user_id=eq.${me.id}`);
+        if(links.length){
+          const ms=await sb(`mission?select=id,name,status,evangelism_legal,public_location,description,budget_amount&id=in.(${links.map(l=>l.mission_id).join(',')})`);
+          ms.forEach(r=>{if(!MISSIONS[r.id]){const bgs=Object.values(MBG);Object.defineProperty(MISSIONS,r.id,{value:{id:r.id,name:r.name,country:r.public_location||'',place:r.public_location||'',team:'',org:'',goal:+r.budget_amount||0,raised:0,short:r.description||'',battle:r.description||'',resolution:'',bg:bgs[0],photo:null,legal:!!r.evangelism_legal,where:'',follow:'',web:'',soc:'',email:'',db:true},enumerable:false,writable:true,configurable:true});HELPED[r.id]=HELPED[r.id]||[];}});
+          const lead=links.find(l=>l.role==='lead')||links[0]; LIVE.myMission=lead.mission_id;
+        }
+      } else { await LIVE.loadAdmin(); }
+    }catch(e){console.error(e);toast('Some of your data could not load. Please refresh.');}
+  },
+  async loadAdmin(){
+    const [admins,apps,aucs,tsts,trs,logs]=await Promise.all([
+      sb('users?select=id,email,role,admin_permission!admin_id(permission)&role=in.(admin,super_admin)&order=email'),
+      sb('application?select=id,form_type,status,submitted_at,non_sensitive_answers,users!user_id(email),organisation(legal_name,country_code)&status=in.(submitted,in_review)&order=submitted_at'),
+      sb('auction?select=id,start_price,ends_at,mission_summary,artwork(title,size_class,piece_description,reason_for_mission,mission_id,artist_profile(display_name),mission(name))&status=eq.pending_approval'),
+      sb('testimony?select=id,title,format,recipient_mode,body,sections,mission_id,created_at,mission(name)&status=eq.submitted&order=created_at'),
+      sb('tranche?select=id,sequence,amount,trigger_type,payment(mission_id,auction_id,mission(name))&status=eq.ready'),
+      sb('audit_log?select=created_at,action,target_type,users!actor_id(email)&order=created_at.desc&limit=200').catch(()=>[])
+    ]);
+    ADMINS.length=0;
+    const mine=admins.find(a=>a.id===LIVE.me.id), rest=admins.filter(a=>a.id!==LIVE.me.id);
+    [mine,...rest].filter(Boolean).forEach(a=>{const p={miss:0,arts:0,auc:0,pay:0,web:0,rules:0,log:0,super:0};
+      (a.admin_permission||[]).forEach(x=>{if(PERM_UI[x.permission])p[PERM_UI[x.permission]]=1;});
+      if(p.super) Object.keys(p).forEach(k=>p[k]=1);
+      ADMINS.push({n:nameOf(a.email),id:a.id,p});});
+    S.adminAs=0;
+    Object.keys(Q).forEach(k=>Q[k]=[]); Object.keys(QD).forEach(k=>delete QD[k]);
+    apps.forEach(a=>{const kind=a.form_type==='artist'?'artist':'missionary', who=(a.organisation&&a.organisation.legal_name)||nameOf(a.users&&a.users.email);
+      Q[kind].push({id:a.id,t:who,s:`${a.form_type.replace('_',' ')} application · submitted ${dmy(a.submitted_at)}`});
+      QD[a.id]={f:[['Applicant',esc((a.users&&a.users.email)||'—')],['Form',esc(a.form_type)],['Organisation',a.organisation?esc(a.organisation.legal_name+' · '+a.organisation.country_code):'—'],...Object.entries(a.non_sensitive_answers||{}).map(([k,v])=>[esc(k),esc(String(v))])]};});
+    aucs.forEach(a=>{const w=a.artwork||{};
+      Q.auction.push({id:a.id,t:`${w.title||'Artwork'} · ${(w.artist_profile&&w.artist_profile.display_name)||'artist'}`,s:`For ${(w.mission&&w.mission.name)||'mission'} · starting price ${eur(a.start_price)}`});
+      QD[a.id]={f:[['Artwork',esc(w.title||'')],['Artist',esc((w.artist_profile&&w.artist_profile.display_name)||'')],['Funds',esc((w.mission&&w.mission.name)||'')],['Size',esc(w.size_class||'—')],['Starting price',eur(a.start_price)],['Auction ends',dmy(a.ends_at)],['Mission summary',esc(a.mission_summary||'')],['About the piece',esc(w.piece_description||'')],['Why this mission',esc(w.reason_for_mission||'')]],check:['Photos are sharp and show the whole work','Texts are checked','The mission is approved and still raising funds']};});
+    tsts.forEach(x=>{const mname=(x.mission&&x.mission.name)||'';
+      const secs=(Array.isArray(x.sections)?x.sections:[]).filter(s=>s.enabled!==false).map(s=>({l:s.section||'',sub:s.subtitle||'',txt:s.text||''}));
+      Q.testimony.push({id:x.id,t:`${x.title} · ${mname}`,s:`${FMT_LABEL[x.format]||x.format} · sent ${dmy(x.created_at)}`,
+        det:{fmt:FMT_LABEL[x.format]||x.format,to:x.recipient_mode==='all'?'Everyone on the mailing list':x.recipient_mode==='selected'?'Selected receivers':'Social media',secs:secs.length?secs:[{l:'Message',sub:'',txt:x.body||''}],quote:x.body||'',ms:false,web:true},
+        story:{id:x.id,m:x.mission_id,type:FMT_LABEL[x.format]||'Testimony',title:x.title,quote:x.body||'',milestone:'',likes:0,date:new Date().toISOString().slice(0,10)}});});
+    trs.forEach(x=>{const p=x.payment||{}, mname=(p.mission&&p.mission.name)||'Mission';
+      Q.payment.push({id:x.id,t:`${mname} · tranche ${x.sequence}`,s:`${eur(x.amount)} · released on ${x.trigger_type}${+x.amount>=1000?' · above two-approver threshold':''}`,big:+x.amount>=1000,self:false});
+      QD[x.id]={f:[['Mission',esc(mname)],['Tranche',String(x.sequence)],['Amount',eur(x.amount)],['Released when',esc(x.trigger_type)],['Rule','Whoever approved the auction cannot approve this payment. €1,000 or more needs two approvers.']]};});
+    LOG.length=0;
+    (logs||[]).forEach(l=>LOG.push({when:dmyhm(l.created_at),who:nameOf(l.users&&l.users.email)||'system',role:roleOf(l.action),action:esc(l.action),item:esc((l.target_type||'').toLowerCase())}));
+    LIVE.admin=true;
+  },
+  async decide(id,kind,decision,note){
+    if(!LIVE.admin||!isId(id)||!KIND_TARGET[kind]) return;
+    try{const r=await rpc('admin_decide',{p_target_type:KIND_TARGET[kind],p_target_id:id,p_decision:decision,p_note:note||null});
+      if(r==='needs_second') toast('Approval 1 of 2 saved. A second administrator must approve.');
+      else toast(decision==='approved'?'Approved and saved to the audit log.':'Declined and saved to the audit log.');
+      if(kind==='auction'||kind==='testimony') LIVE.load().catch(()=>{});
+    }catch(e){toast(e.message);await LIVE.loadAdmin();if(location.hash==='#admin')render();}
+  },
+  async setPerm(a,k,on){
+    if(!LIVE.admin||!a||!isId(a.id)) return;
+    try{await rpc('admin_set_permission',{p_admin:a.id,p_permission:PERM_DB[k],p_on:on});}
+    catch(e){toast(e.message);await LIVE.loadAdmin();if(location.hash==='#admin')render();}
+  },
+  portalSupporter(){
+    const pays=LIVE.sup.payments, given=pays.filter(p=>p.status!=='pending'&&p.status!=='failed'&&p.status!=='refunded').reduce((t,p)=>t+(+p.item_amount),0);
+    const trs=p=>{const t=p.tranche||[];if(!t.length)return '—';return `${t.filter(x=>x.status==='released').length} of ${t.length} released`;};
+    const rows=pays.map(p=>{const a=p.auction_id?ART.find(x=>x.auctionId===p.auction_id):null, st=PAY_ST[p.status]||['wait',p.status];
+      return `<tr><td>${a?esc(a.title):p.kind==='gift'?'Manna (gift)':'Artwork'} · ${esc(mName(p.mission_id)||'')}</td><td class="num">${eur(p.item_amount)}</td><td>${status(st[0],st[1])}</td><td>${trs(p)}</td></tr>`;}).join('');
+    return `${pageHero('My portal · Supporter','Welcome back, '+esc(S.name),'')}
+<section class="wrap sec" style="padding-top:20px"><div class="stack" style="gap:20px">
+${tabs('sup',[
+ ['overview','Overview',`<div class="kpis"><div class="kpi"><b>${pays.length}</b><span>Payments and gifts</span></div><div class="kpi"><b>${eur(given)}</b><span>Given in total</span></div></div>
+   <div class="banner" style="margin-top:20px;background:var(--white)"><span>Bidding from your account is switched on in the next update. Until then you can browse and give.</span></div>`],
+ ['won','Payments and gifts',pays.length?`<div class="tbl"><table><thead><tr><th>Item</th><th class="num">Amount</th><th>Payment</th><th>Mission tranches</th></tr></thead><tbody>${rows}</tbody></table></div>`:'<p class="muted">No payments yet.</p>'],
+ ['profile','Profile',`<div class="box pad stack" style="max-width:720px"><p><b>Name shown when you bid:</b> ${esc(LIVE.sup.profile.display_name_pseudonym||'—')}</p><p><b>Email:</b> ${esc(LIVE.me.email)}</p><p class="hint">Editing your profile and address comes in a later update.</p></div>`]
+])}</div></section>`;
+  },
+  after(h){
+    if(h==='portal-artist'&&LIVE.art){const tb=$('#aw-rows');if(!tb)return;
+      const ST={draft:['wait','Draft'],pending:['wait','Awaiting approval'],published:['live','Live'],sold:['sold','Sold · ship now'],withdrawn:['no','Withdrawn']};
+      tb.innerHTML=LIVE.art.works.map(w=>{const au=w.auction, amounts=au?(au.bid||[]).map(b=>+b.amount):[], cur=amounts.length?Math.max(...amounts):null;
+        const st=au&&au.status==='pending_approval'?['wait','Awaiting approval']:au&&au.status==='ended'?['sold','Ended']:(ST[w.status]||['wait',w.status]);
+        const link=ART.find(a=>a.id===w.id);
+        return `<tr><td>${link?`<a href="#auction-${w.id}">${esc(w.title)}</a>`:esc(w.title)}</td><td>${esc(MISSIONS[w.mission_id]?MISSIONS[w.mission_id].name:'—')}</td><td>${status(st[0],st[1])}</td><td class="num">${cur?eur(cur):'—'}</td><td>${link?`<a class="link" href="#auction-${w.id}">View</a>`:''}</td></tr>`;}).join('')||'<tr><td colspan="5" class="muted">No artworks yet.</td></tr>';}
+  }
+});
+V['portal-supporter']=()=>LIVE.sup?LIVE.portalSupporter():V._supMock();
+if(LIVE.sbc) LIVE.sbc.auth.onAuthStateChange((ev,s)=>{if(s)LIVE.token=s.access_token;});
+
+LIVE.load().catch(e=>{console.error(e);setTimeout(()=>toast('Live data could not load. Showing sample content.'),400);}).then(()=>LIVE.restore()).catch(e=>console.error(e)).finally(()=>render());
 })();
 </script>
 
